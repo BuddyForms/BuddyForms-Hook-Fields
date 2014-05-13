@@ -34,7 +34,7 @@ function buddyforms_hook_options_into_formfields($form_fields,$form_slug,$field_
     if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['hook']))
         $hook = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['hook'];
 
-    $form_fields['right']['hook']		= new Element_Textbox("Hook: <i>Add hook name</i>", "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][hook]", array('required' => false, 'value' => $hook));
+    $form_fields['right']['hook']		= new Element_Textbox("Hook: <i>Add hook name</i>", "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][hook]", array('value' => $hook));
 
 
     $display_name = 'false';
@@ -47,14 +47,8 @@ function buddyforms_hook_options_into_formfields($form_fields,$form_slug,$field_
     return $form_fields;
 }
 
-
-
-
-
-
-
 function buddyforms_form_display_element_frontend(){
-    global $buddyforms, $post;
+    global $buddyforms, $post, $bf_hook_id;
 
     if(is_archive())
         return;
@@ -64,13 +58,6 @@ function buddyforms_form_display_element_frontend(){
 
     if (!isset($buddyforms['buddyforms']))
         return;
-
-    $post_id = '';
-    $post_id = apply_filters('buddyforms_hook_fields_from_post_id',$post_id);
-
-    if(isset($post_id)){
-        $post = get_post($post_id);
-    }
 
     $post_type = get_post_type($post);
 
@@ -86,9 +73,6 @@ function buddyforms_form_display_element_frontend(){
 
     $bf_form_slug = get_post_meta($post->ID, '_bf_form_slug', true);
 
-    if(!isset($bf_form_slug) || $bf_form_slug == 'none' )
-        return;
-
     if (!empty($buddyforms['buddyforms'][$form]['form_fields'])) {
 
         foreach ($buddyforms['buddyforms'][$form]['form_fields'] as $key => $customfield) :
@@ -101,7 +85,7 @@ function buddyforms_form_display_element_frontend(){
 
             $customfield_value = get_post_meta($post->ID, $slug, true);
 
-            if (isset($customfield_value) && $customfield['display'] != 'no') :
+            if (isset($customfield_value)) :
 
                 $post_meta_tmp = '<div class="post_meta ' . $slug . '">';
 
@@ -133,8 +117,9 @@ function buddyforms_form_display_element_frontend(){
                 $post_meta_tmp .= '</div>';
                 apply_filters('buddyforms_form_element_display_frontend_before_hook',$post_meta_tmp);
 
-                if( isset( $customfield['hook'] )){
-                    add_action( $customfield['hook'], create_function('', 'return "' . addcslashes($post_meta_tmp, '"') . '";') );
+
+                if( isset( $customfield['hook'] ) && !empty($customfield['hook'])){
+                    add_action( $customfield['hook'], create_function('', 'echo  "' . addcslashes($post_meta_tmp, '"') . '";') );
                 }
 
                 switch ($customfield['display']) {
@@ -150,14 +135,11 @@ function buddyforms_form_display_element_frontend(){
                     case 'after_the_content':
                         add_filter( 'the_content', create_function('', 'return "' . addcslashes($post->post_content.$post_meta_tmp, '"') . '";') );
                         break;
-
-                    default:
-                        add_action($customfield['display'], create_function('', 'echo "' . addcslashes($post_meta_tmp, '"') . '";'));
-                        break;
                 }
 
 
             endif;
+
         endforeach;
     }
 }
