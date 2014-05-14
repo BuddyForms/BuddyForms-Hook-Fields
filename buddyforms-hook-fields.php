@@ -48,10 +48,7 @@ function buddyforms_hook_options_into_formfields($form_fields,$form_slug,$field_
 }
 
 function buddyforms_form_display_element_frontend(){
-    global $buddyforms, $post, $bf_hook_id;
-
-    if(is_archive())
-        return;
+    global $buddyforms, $post;
 
     if(is_admin())
         return;
@@ -61,33 +58,22 @@ function buddyforms_form_display_element_frontend(){
 
     $post_type = get_post_type($post);
 
-    foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
-        if(isset($buddyform['post_type']) && $buddyform['post_type'] != 'none' &&  $buddyform['post_type'] == $post_type){
-            $form = $buddyform['slug'];
-        }
-
-    }
+    $form = get_post_meta( $post->ID, '_bf_form_slug', true );
 
     if(!isset($form))
         return;
-
-    $bf_form_slug = get_post_meta($post->ID, '_bf_form_slug', true);
 
     if (!empty($buddyforms['buddyforms'][$form]['form_fields'])) {
 
         foreach ($buddyforms['buddyforms'][$form]['form_fields'] as $key => $customfield) :
 
-            if (isset($customfield['slug']) && !empty($customfield['slug'])) {
-                $slug = $customfield['slug'];
-            } else {
-                $slug = sanitize_title($customfield['name']);
-            }
+            $customfield_slug = $customfield['slug'];
 
-            $customfield_value = get_post_meta($post->ID, $slug, true);
+            $customfield_value = get_post_meta($post->ID, $customfield_slug, true);
 
             if (isset($customfield_value)) :
 
-                $post_meta_tmp = '<div class="post_meta ' . $slug . '">';
+                $post_meta_tmp = '<div class="post_meta ' . $customfield_slug . '">';
 
                 if (isset($customfield['display_name']))
                     $post_meta_tmp .= '<label>' . $customfield['name'] . '</label>';
@@ -115,6 +101,7 @@ function buddyforms_form_display_element_frontend(){
                 $post_meta_tmp .= $meta_tmp;
 
                 $post_meta_tmp .= '</div>';
+
                 apply_filters('buddyforms_form_element_display_frontend_before_hook',$post_meta_tmp);
 
 
@@ -122,21 +109,22 @@ function buddyforms_form_display_element_frontend(){
                     add_action( $customfield['hook'], create_function('', 'echo  "' . addcslashes($post_meta_tmp, '"') . '";') );
                 }
 
-                switch ($customfield['display']) {
-                    case 'before_the_title':
-                        add_filter( 'the_title', create_function('', 'return "' . addcslashes($post_meta_tmp.$post->post_title, '"') . '";') );
-                        break;
-                    case 'after_the_title':
-                        add_filter( 'the_title', create_function('', 'return "' . addcslashes($post->post_title.$post_meta_tmp, '"') . '";') );
-                        break;
-                    case 'before_the_content':
-                        add_filter( 'the_content', create_function('', 'return "' . addcslashes($post_meta_tmp.$post->post_content, '"') . '";') );
-                        break;
-                    case 'after_the_content':
-                        add_filter( 'the_content', create_function('', 'return "' . addcslashes($post->post_content.$post_meta_tmp, '"') . '";') );
-                        break;
+                if(is_single()){
+                    switch ($customfield['display']) {
+                        case 'before_the_title':
+                            add_filter( 'the_title', create_function('', 'return "' . addcslashes($post_meta_tmp.$post->post_title, '"') . '";') );
+                            break;
+                        case 'after_the_title':
+                            add_filter( 'the_title', create_function('', 'return "' . addcslashes($post->post_title.$post_meta_tmp, '"') . '";') );
+                            break;
+                        case 'before_the_content':
+                            add_filter( 'the_content', create_function('', 'return "' . addcslashes($post_meta_tmp.$post->post_content, '"') . '";') );
+                            break;
+                        case 'after_the_content':
+                            add_filter( 'the_content', create_function('', 'return "' . addcslashes($post->post_content.$post_meta_tmp, '"') . '";') );
+                            break;
+                    }
                 }
-
 
             endif;
 
