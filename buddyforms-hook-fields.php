@@ -28,13 +28,13 @@ function buddyforms_hook_options_into_formfields($form_fields,$form_slug,$field_
     if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['display']))
         $display = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['display'];
 
-    $form_fields['right']['display']	= new Element_Select("Display?", "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][display]", $buddyforms['hooks']['form_element'], array('value' => $display));
+    $form_fields['right']['display']	= new Element_Select("Display? <i>this only works for the single view</i>", "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][display]", $buddyforms['hooks']['form_element'], array('value' => $display));
 
     $hook = '';
     if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['hook']))
         $hook = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['hook'];
 
-    $form_fields['right']['hook']		= new Element_Textbox("Hook: <i>Add hook name</i>", "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][hook]", array('value' => $hook));
+    $form_fields['right']['hook']		= new Element_Textbox("Hook: <i>Add hook name works global</i>", "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][hook]", array('value' => $hook));
 
 
     $display_name = 'false';
