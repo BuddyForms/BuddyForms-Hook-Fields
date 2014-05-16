@@ -7,7 +7,7 @@ Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Have full control of the fields output . Hook your BuddyForms Form Fields via options and display them everywhere on your site.
+Have full control of your fields output. Hook your BuddyForms Form Fields via options and display them everywhere on your site.
 
 == Description ==
 
@@ -16,10 +16,10 @@ This is the BuddyForms Hook Fields Extension. You need the BuddyForms plugin ins
 With this plugin you will get new options added to your Form Builder "Fields" to select where you want to display the field. This makes it very easy to manage the output and can save you a lot of time modifying your templates, by just adding a hook.
 
 <h4>Display different Field Types</h4>
-The plugin will keep care about the different Field Types and display: Links, Categories, text fields etc. exactly as they should. You can decide if you only want the value get displayed or with the field name in a list.
+The plugin will keep care about the different Field Types like ( Links, Categories, text fields etc. ) and display them exactly as they should. You can decide if you only want the value get displayed or with the field name.
 
-<h4>Create a list, reorder Items</h4>
-If you  want to display multiple Fields as list in one place, You can reorder the list easily with drag and drop in the FormBuilder.
+<h4>Create a list - Reorder Items via Drag and Drop</h4>
+If you want to display multiple fields as list in one place, You can reorder the list easily via drag and drop in the FormBuilder. Just move the field to the correct position in the form builder and they will get displayed exact in this order.
 
 <h4>For the single view you have 4 default options.</h4>
 
