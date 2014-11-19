@@ -1,9 +1,9 @@
 <?php
 /*
  Plugin Name: BuddyForms Hook Fields
- Plugin URI: http://themekraft.com
+ Plugin URI: http://themekraft.com/hook-feelds
  Description: BuddyForms Hook Fields
- Version: 1.0.1
+ Version: 1.0.2
  Author: svenl77
  Author URI: http://themekraft.com
  Licence: GPLv3
@@ -83,6 +83,11 @@ function buddyforms_form_display_element_frontend(){
 
     if (!empty($buddyforms['buddyforms'][$form]['form_fields'])) {
 
+        $before_the_title = false;
+        $after_the_title = false;
+        $before_the_content = false;
+        $after_the_content = false;
+
         foreach ($buddyforms['buddyforms'][$form]['form_fields'] as $key => $customfield) :
 
             $customfield_slug = $customfield['slug'];
@@ -130,16 +135,16 @@ function buddyforms_form_display_element_frontend(){
                 if(is_single()){
                     switch ($customfield['display']) {
                         case 'before_the_title':
-                            add_filter( 'the_title', create_function('', 'return "' . addcslashes($post_meta_tmp.$post->post_title, '"') . '";') );
+                            $before_the_title   .= $post_meta_tmp;
                             break;
                         case 'after_the_title':
-                            add_filter( 'the_title', create_function('', 'return "' . addcslashes($post->post_title.$post_meta_tmp, '"') . '";') );
+                            $after_the_title    .= $post_meta_tmp;
                             break;
                         case 'before_the_content':
-                            add_filter( 'the_content', create_function('', 'return "' . addcslashes($post_meta_tmp.$post->post_content, '"') . '";') );
+                            $before_the_content .= $post_meta_tmp;
                             break;
                         case 'after_the_content':
-                            add_filter( 'the_content', create_function('', 'return "' . addcslashes($post->post_content.$post_meta_tmp, '"') . '";') );
+                            $after_the_content  .= $post_meta_tmp;
                             break;
                     }
                 }
@@ -147,6 +152,23 @@ function buddyforms_form_display_element_frontend(){
             endif;
 
         endforeach;
+
+        if(is_single()){
+
+            if($before_the_title)
+                add_filter( 'the_title', create_function('$content,$id', 'if(is_single() && $id == get_the_ID()) { return "'. addcslashes(  $before_the_title, '"') .'$content"; } return $content;'), 10, 2 );
+
+            if($after_the_title)
+                add_filter( 'the_title', create_function('$content,$id', 'if(is_single() && $id == get_the_ID()) { return "$content'. addcslashes(  $after_the_title, '"') .'"; } return $content;'), 10, 2 );
+
+            if($before_the_content)
+                add_filter( 'the_content', create_function('', 'return "' . addcslashes($before_the_content.$post->post_content, '"') . '";') );
+
+            if($after_the_content)
+                add_filter( 'the_content', create_function('', 'return "' . addcslashes($post->post_content.$after_the_content, '"') . '";') );
+
+        }
+
     }
 }
 
