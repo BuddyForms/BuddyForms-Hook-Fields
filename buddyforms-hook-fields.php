@@ -1,7 +1,7 @@
 <?php
 /*
  Plugin Name: BuddyForms Hook Fields
- Plugin URI: http://themekraft.com/hook-feelds
+ Plugin URI: http://themekraft.com/store/wordpress-front-end-editor-and-form-builder-buddyforms/
  Description: BuddyForms Hook Fields
  Version: 1.0.2
  Author: svenl77
