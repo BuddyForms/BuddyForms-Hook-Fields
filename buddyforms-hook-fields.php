@@ -3,7 +3,7 @@
  Plugin Name: BuddyForms Hook Fields
  Plugin URI: http://themekraft.com/store/wordpress-front-end-editor-and-form-builder-buddyforms/
  Description: BuddyForms Hook Fields
- Version: 1.0.2
+ Version: 1.1
  Author: svenl77
  Author URI: http://themekraft.com
  Licence: GPLv3
@@ -71,32 +71,30 @@ function buddyforms_form_display_element_frontend(){
     if(is_admin())
         return;
 
-    if (!isset($buddyforms['buddyforms']))
+    $form_slug = get_post_meta( $post->ID, '_bf_form_slug', true );
+
+    if(!isset($form_slug))
         return;
 
-    $post_type = get_post_type($post);
-
-    $form = get_post_meta( $post->ID, '_bf_form_slug', true );
-
-    if(!isset($form))
+    if(!isset($buddyforms['buddyforms'][$form_slug]))
         return;
 
-    if (!empty($buddyforms['buddyforms'][$form]['form_fields'])) {
+    if (!isset($buddyforms['buddyforms'][$form_slug]['form_fields']))
+        return;
 
-        $before_the_title = false;
-        $after_the_title = false;
-        $before_the_content = false;
-        $after_the_content = false;
+    $before_the_title   = false;
+    $after_the_title    = false;
+    $before_the_content = false;
+    $after_the_content  = false;
 
-        foreach ($buddyforms['buddyforms'][$form]['form_fields'] as $key => $customfield) :
+    foreach ($buddyforms['buddyforms'][$form_slug]['form_fields'] as $key => $customfield) :
 
-            $customfield_slug = $customfield['slug'];
+        if (!empty($customfield['slug']) && (!empty($customfield['hook']) || is_single())) :
 
-            $customfield_value = get_post_meta($post->ID, $customfield_slug, true);
+            $customfield_value = get_post_meta($post->ID, $customfield['slug'], true);
 
-            if (isset($customfield_value)) :
-
-                $post_meta_tmp = '<div class="post_meta ' . $customfield_slug . '">';
+            if(!empty($customfield_value)){
+                $post_meta_tmp = '<div class="post_meta ' . $customfield['slug'] . '">';
 
                 if (isset($customfield['display_name']))
                     $post_meta_tmp .= '<label>' . $customfield['name'] . '</label>';
@@ -117,7 +115,7 @@ function buddyforms_form_display_element_frontend(){
                         $meta_tmp = "<p><a href='" . $customfield_value . "' " . $customfield['name'] . ">" . $customfield_value . " </a></p>";
                         break;
                     default:
-                        apply_filters('buddyforms_form_element_display_frontend',$customfield,$post_type);
+                        apply_filters('buddyforms_form_element_display_frontend',$customfield);
                         break;
                 }
 
@@ -125,7 +123,7 @@ function buddyforms_form_display_element_frontend(){
 
                 $post_meta_tmp .= '</div>';
 
-                apply_filters('buddyforms_form_element_display_frontend_before_hook',$post_meta_tmp);
+                $post_meta_tmp = apply_filters('buddyforms_form_element_display_frontend_before_hook',$post_meta_tmp);
 
 
                 if( isset( $customfield['hook'] ) && !empty($customfield['hook'])){
@@ -149,27 +147,28 @@ function buddyforms_form_display_element_frontend(){
                     }
                 }
 
-            endif;
+            }
 
-        endforeach;
+        endif;
 
-        if(is_single()){
+    endforeach;
 
-            if($before_the_title)
-                add_filter( 'the_title', create_function('$content,$id', 'if(is_single() && $id == get_the_ID()) { return "'. addcslashes(  $before_the_title, '"') .'$content"; } return $content;'), 10, 2 );
+    if(is_single()){
 
-            if($after_the_title)
-                add_filter( 'the_title', create_function('$content,$id', 'if(is_single() && $id == get_the_ID()) { return "$content'. addcslashes(  $after_the_title, '"') .'"; } return $content;'), 10, 2 );
+    if($before_the_title)
+        add_filter( 'the_title', create_function('$content,$id', 'if(is_single() && $id == get_the_ID()) { return "'. addcslashes(  $before_the_title, '"') .'$content"; } return $content;'), 10, 2 );
 
-            if($before_the_content)
-                add_filter( 'the_content', create_function('', 'return "' . addcslashes($before_the_content.$post->post_content, '"') . '";') );
+    if($after_the_title)
+        add_filter( 'the_title', create_function('$content,$id', 'if(is_single() && $id == get_the_ID()) { return "$content'. addcslashes(  $after_the_title, '"') .'"; } return $content;'), 10, 2 );
 
-            if($after_the_content)
-                add_filter( 'the_content', create_function('', 'return "' . addcslashes($post->post_content.$after_the_content, '"') . '";') );
+    if($before_the_content)
+        add_filter( 'the_content', create_function('', 'return "' . addcslashes($before_the_content.$post->post_content, '"') . '";') );
 
-        }
+    if($after_the_content)
+        add_filter( 'the_content', create_function('', 'return "' . addcslashes($post->post_content.$after_the_content, '"') . '";') );
 
     }
+
 }
 
 add_action('the_post','buddyforms_form_display_element_frontend');
