@@ -2,8 +2,8 @@
 Contributors: svenl77
 Tags: buddypress, user, members, profiles, custom post types, taxonomy, frontend posting, frontend editing,hook fields, custom fields, post meta
 Requires at least: WordPress 3.x
-Tested up to: WordPress 4.1
-Stable tag: 1.0.2
+Tested up to: WordPress 4.1.1
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +69,10 @@ You need the BuddyForms plugin installed for the plugin to work.
 
 
 == Changelog ==
+
+= 1.0.3 =
+Reduce the query for a better performance
+Clean up the code
 
 = 1.0.2 =
 Fixed some bugs reported by users.
