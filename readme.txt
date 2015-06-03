@@ -1,9 +1,9 @@
 === BuddyForms Hook Fields ===
-Contributors: svenl77
+Contributors: svenl77, ThemeKraft
 Tags: buddypress, user, members, profiles, custom post types, taxonomy, frontend posting, frontend editing,hook fields, custom fields, post meta
 Requires at least: WordPress 3.x
-Tested up to: WordPress 4.1.1
-Stable tag: 1.1
+Tested up to: WordPress 4.2.2
+Stable tag: 1.1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -70,14 +70,17 @@ You need the BuddyForms plugin installed for the plugin to work.
 
 == Changelog ==
 
-= 1.0.3 =
+= 1.1.4 =
+Fixed a issue with the checkbox form element. Props to Thomas for the detailed issue Report.
+
+= 1.1.3 =
 Reduce the query for a better performance
 Clean up the code
 
-= 1.0.2 =
+= 1.1.2 =
 Fixed some bugs reported by users.
 
-= 1.0.1 =
+= 1.1 =
 Spelling Corrections
 
 = 1.0 =

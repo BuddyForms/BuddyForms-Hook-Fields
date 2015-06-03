@@ -3,7 +3,7 @@
  Plugin Name: BuddyForms Hook Fields
  Plugin URI: http://themekraft.com/store/wordpress-front-end-editor-and-form-builder-buddyforms/
  Description: BuddyForms Hook Fields
- Version: 1.1
+ Version: 1.1.4
  Author: svenl77
  Author URI: http://themekraft.com
  Licence: GPLv3
@@ -58,7 +58,7 @@ function buddyforms_hook_options_into_formfields($form_fields,$form_slug,$field_
     $display_name = 'false';
     if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['display_name']))
         $display_name = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['display_name'];
-    $form_fields['right']['display_name']		= new Element_Checkbox("Display name?","buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][display_name]",array(''),array('value' => $display_name));
+    $form_fields['right']['display_name']		=   new Element_Checkbox("Display name?","buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][display_name]",array(''),array('value' => $display_name, 'id' => "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][display_name]"));
 
     $form_fields['right']['html_display_end']	= new Element_HTML('</div>');
 
