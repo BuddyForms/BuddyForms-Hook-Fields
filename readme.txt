@@ -1,5 +1,5 @@
 === BuddyForms Hook Fields ===
-Contributors: svenl77, ThemeKraft
+Contributors: svenl77, themekraft, buddyforms
 Tags: buddypress, user, members, profiles, custom post types, taxonomy, frontend posting, frontend editing,hook fields, custom fields, post meta
 Requires at least: WordPress 3.x
 Tested up to: WordPress 4.2.2
@@ -11,7 +11,7 @@ Have full control of your fields output. Hook your BuddyForms Form Fields via op
 
 == Description ==
 
-This is the BuddyForms Hook Fields Extension. You need the BuddyForms plugin installed for the plugin to work. <a href="http://themekraft.com/store/wordpress-front-end-editor-and-form-builder-buddyforms/" target="_blank">Get BuddyForms now!</a>
+This is the BuddyForms Hook Fields Extension. You need the BuddyForms plugin installed for the plugin to work. <a href="http://buddyforms.com" target="_blank">Get BuddyForms now!</a>
 
 With this plugin you will get new options added to your Form Builder "Fields" to select where you want to display the field. This makes it very easy to manage the output and can save you a lot of time modifying your templates, by just adding a hook.
 
@@ -42,14 +42,6 @@ The BuddyForms Documentation with many how-to’s is following now!
 
 If you still get stuck somewhere, our support gets you back on the right track.
 You can find all help buttons in your BuddyForms Settings Panel in your WP Dashboard!
-
-<h4>Got ideas or just missing something?</h4>
-
-If you still miss something, now it’s your time!
-
-Visit our ideas forums, add your ideas and vote for others!
-
-<a href="https://themekraft.zendesk.com/hc/communities/public/topics/200001402-BuddyForms-Ideas" target="_blank">Visit Ideas Forums</a>
 
 == Installation ==
 

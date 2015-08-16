@@ -1,11 +1,11 @@
 <?php
 /*
  Plugin Name: BuddyForms Hook Fields
- Plugin URI: http://themekraft.com/store/wordpress-front-end-editor-and-form-builder-buddyforms/
+ Plugin URI: http://buddyforms.com/downloads/buddyforms-hook-fields/
  Description: BuddyForms Hook Fields
  Version: 1.1.4
- Author: svenl77
- Author URI: http://themekraft.com
+ Author: svenl77, buddyforms
+ Author URI: https://profiles.wordpress.org/svenl77
  Licence: GPLv3
  Network: false
 
