@@ -40,27 +40,27 @@ function buddyforms_hook_options_into_formfields($form_fields,$form_slug,$field_
     $buddyforms['hooks']['form_element'] = apply_filters('buddyforms_form_element_hooks',$buddyforms['hooks']['form_element'],$form_slug);
 
 
-    $form_fields['right']['html_display']		= new Element_HTML('<div class="bf_element_display_'.$form_slug.'">');
+    $form_fields['addons']['html_display']		= new Element_HTML('<div class="bf_element_display_'.$form_slug.'">');
 
     $display = 'false';
     if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['display']))
         $display = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['display'];
 
-    $form_fields['right']['display']	= new Element_Select("Display? <i>This only works for the single view</i>", "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][display]", $buddyforms['hooks']['form_element'], array('value' => $display));
+    $form_fields['addons']['display']	= new Element_Select("Display? <i>This only works for the single view</i>", "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][display]", $buddyforms['hooks']['form_element'], array('value' => $display));
 
     $hook = '';
     if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['hook']))
         $hook = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['hook'];
 
-    $form_fields['right']['hook']		= new Element_Textbox("Hook: <i>Add hook name works global</i>", "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][hook]", array('value' => $hook));
+    $form_fields['addons']['hook']		= new Element_Textbox("Hook: <i>Add hook name works global</i>", "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][hook]", array('value' => $hook));
 
 
     $display_name = 'false';
     if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['display_name']))
         $display_name = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['display_name'];
-    $form_fields['right']['display_name']		=   new Element_Checkbox("Display name?","buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][display_name]",array(''),array('value' => $display_name, 'id' => "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][display_name]"));
+    $form_fields['addons']['display_name']		=   new Element_Checkbox("Display name?","buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][display_name]",array(''),array('value' => $display_name, 'id' => "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][display_name]"));
 
-    $form_fields['right']['html_display_end']	= new Element_HTML('</div>');
+    $form_fields['addons']['html_display_end']	= new Element_HTML('</div>');
 
     return $form_fields;
 }
