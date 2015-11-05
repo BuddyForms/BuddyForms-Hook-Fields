@@ -35,24 +35,24 @@ function buddyforms_hook_options_into_formfields($form_fields,$field_type,$field
     $buddyform = get_post_meta($post->ID, '_buddyforms_options', true);
 
     $hook_field_types = array(
-        'Text',
-        'Textarea',
-        'Link',
-        'Mail',
-        'Dropdown',
-        'Radiobutton',
-        'Checkbox',
-        'Taxonomy',
-        'Number',
-        'Date');
+        'text',
+        'textarea',
+        'link',
+        'mail',
+        'dropdown',
+        'radiobutton',
+        'checkbox',
+        'taxonomy',
+        'number',
+        'date');
 
     if( !in_array($field_type, $hook_field_types))
         return $form_fields;
 
     $hooks = array('no','before_the_title','after_the_title','before_the_content','after_the_content');
-    $hooks = apply_filters('buddyforms_form_element_hooks',$hooks,$form_slug);
+    $hooks = apply_filters('buddyforms_form_element_hooks',$hooks);
 
-    $form_fields['hooks']['html_display']		= new Element_HTML('<div class="bf_element_display_'.$form_slug.'">');
+    $form_fields['hooks']['html_display']		= new Element_HTML('<div class="bf_element_display">');
 
     $display = 'false';
     if(isset($buddyform['form_fields'][$field_id]['display']))
@@ -119,10 +119,10 @@ function buddyforms_form_display_element_frontend(){
 
 
                 switch ($customfield['type']) {
-                    case 'Taxonomy':
+                    case 'taxonomy':
                         $meta_tmp = get_the_term_list( $post->ID, $customfield['taxonomy'], "<p>", ' - ', "</p>" );
                         break;
-                    case 'Link':
+                    case 'link':
                         $meta_tmp = "<p><a href='" . $customfield_value . "' " . $customfield['name'] . ">" . $customfield_value . " </a></p>";
                         break;
                     default:
