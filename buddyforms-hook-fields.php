@@ -3,7 +3,7 @@
  Plugin Name: BuddyForms Hook Fields
  Plugin URI: http://buddyforms.com/downloads/buddyforms-hook-fields/
  Description: BuddyForms Hook Fields
- Version: 1.1.5
+ Version: 1.1.7
  Author: svenl77, buddyforms
  Author URI: https://profiles.wordpress.org/svenl77
  Licence: GPLv3
@@ -77,9 +77,12 @@ function buddyforms_hook_options_into_formfields($form_fields,$field_type,$field
 }
 
 function buddyforms_form_display_element_frontend(){
-    global $buddyforms, $post;
+    global $buddyforms, $post, $bf_hooked;
 
     if(is_admin())
+        return;
+
+    if($bf_hooked)
         return;
 
     $form_slug = get_post_meta( $post->ID, '_bf_form_slug', true );
@@ -130,7 +133,8 @@ function buddyforms_form_display_element_frontend(){
                         break;
                 }
 
-                $post_meta_tmp .= $meta_tmp;
+                if(!wp_error($meta_tmp))
+                  $post_meta_tmp .= $meta_tmp;
 
                 $post_meta_tmp .= '</div>';
 
@@ -166,19 +170,20 @@ function buddyforms_form_display_element_frontend(){
 
     if(is_single()){
 
-    if($before_the_title)
-        add_filter( 'the_title', create_function('$content,$id', 'if(is_single() && $id == get_the_ID()) { return "'. addcslashes(  $before_the_title, '"') .'$content"; } return $content;'), 10, 2 );
+        if($before_the_title)
+            add_filter( 'the_title', create_function('$content,$id', 'if(is_single() && $id == get_the_ID()) { return "'. addcslashes(  $before_the_title, '"') .'$content"; } return $content;'), 10, 2 );
 
-    if($after_the_title)
-        add_filter( 'the_title', create_function('$content,$id', 'if(is_single() && $id == get_the_ID()) { return "$content'. addcslashes(  $after_the_title, '"') .'"; } return $content;'), 10, 2 );
+        if($after_the_title)
+            add_filter( 'the_title', create_function('$content,$id', 'if(is_single() && $id == get_the_ID()) { return "$content'. addcslashes(  $after_the_title, '"') .'"; } return $content;'), 10, 2 );
 
-    if($before_the_content)
-        add_filter( 'the_content', create_function('', 'return "' . addcslashes($before_the_content.$post->post_content, '"') . '";') );
+        if($before_the_content)
+            add_filter( 'the_content', create_function('', 'return "' . addcslashes($before_the_content.$post->post_content, '"') . '";') );
 
-    if($after_the_content)
-        add_filter( 'the_content', create_function('', 'return "' . addcslashes($post->post_content.$after_the_content, '"') . '";') );
+        if($after_the_content)
+            add_filter( 'the_content', create_function('', 'return "' . addcslashes($post->post_content.$after_the_content, '"') . '";') );
 
     }
+    $bf_hooked = true;
 
 }
 

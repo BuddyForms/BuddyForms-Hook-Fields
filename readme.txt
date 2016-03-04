@@ -2,8 +2,8 @@
 Contributors: svenl77, themekraft, buddyforms
 Tags: buddypress, user, members, profiles, custom post types, taxonomy, frontend posting, frontend editing,hook fields, custom fields, post meta
 Requires at least: WordPress 3.9
-Tested up to: WordPress 4.3
-Stable tag: 1.1.5
+Tested up to: WordPress 4.4
+Stable tag: 1.1.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,8 +62,16 @@ You need the BuddyForms plugin installed for the plugin to work.
 
 == Changelog ==
 
+= 1.1.7 =
+Make it work with the latest version of buddyforms. the buddyforms array has changed so I adjust the code too the new structure
+Limit the hook options to supported form elements
+
+= 1.1.6 =
+Make it work with the latest version of BuddyForms. the BuddyForms array has changed so I adjust the code too the new structure
+limit the hook options to supported form elements
+
 = 1.1.5 =
-change the url to buddyforms.com
+change the url to BuddyForms.com
 move the options to the new section addons
 
 = 1.1.4 =
@@ -81,4 +89,3 @@ Spelling Corrections
 
 = 1.0 =
 final 1.0 version
-
