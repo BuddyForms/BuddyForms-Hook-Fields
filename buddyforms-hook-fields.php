@@ -160,7 +160,7 @@ function buddyforms_form_display_element_frontend() {
 					add_action( $customfield['hook'], create_function( '', 'echo  "' . addcslashes( $post_meta_tmp, '"' ) . '";' ) );
 				}
 
-				if ( is_single() ) {
+				if ( is_single() && isset( $customfield['display'] ) ) {
 					switch ( $customfield['display'] ) {
 						case 'before_the_title':
 							$before_the_title .= $post_meta_tmp;
