@@ -91,6 +91,10 @@ function buddyforms_form_display_element_frontend() {
 		return;
 	}
 
+	if(!isset($post->ID)) {
+		return;
+	}
+
 	if ( $bf_hooked ) {
 		return;
 	}
