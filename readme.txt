@@ -1,9 +1,9 @@
 === BuddyForms Hook Fields ===
 Contributors: svenl77, themekraft, buddyforms
 Tags: buddypress, user, members, profiles, custom post types, taxonomy, frontend posting, frontend editing,hook fields, custom fields, post meta
-Requires at least: WordPress 3.9
-Tested up to: WordPress 4.4
-Stable tag: 1.1.7
+Requires at least: 3.9
+Tested up to: 4.6.1
+Stable tag: 1.1.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,10 @@ You need the BuddyForms plugin installed for the plugin to work.
 
 
 == Changelog ==
+
+= 1.1.8 =
+fixed some smaller issues
+fixed some notice of undefined index
 
 = 1.1.7 =
 Make it work with the latest version of buddyforms. the buddyforms array has changed so I adjust the code too the new structure
