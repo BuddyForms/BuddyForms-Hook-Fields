@@ -141,7 +141,7 @@ function buddyforms_form_display_element_frontend() {
 
 				switch ( $customfield['type'] ) {
 					case 'taxonomy':
-						$meta_tmp = get_the_term_list( $post->ID, $customfield['taxonomy'], "<p>", ' - ', "</p>" );
+							$meta_tmp = get_the_term_list( $post->ID, $customfield['taxonomy'], "<p>", ' - ', "</p>" );
 						break;
 					case 'link':
 						$meta_tmp = "<p><a href='" . $customfield_value . "' " . $customfield['name'] . ">" . $customfield_value . " </a></p>";
@@ -211,3 +211,43 @@ function buddyforms_form_display_element_frontend() {
 }
 
 add_action( 'the_post', 'buddyforms_form_display_element_frontend' );
+
+//
+// Check the plugin dependencies
+//
+add_action('init', function(){
+
+	// Only Check for requirements in the admin
+	if(!is_admin()){
+		return;
+	}
+
+	// Require TGM
+	require ( dirname(__FILE__) . '/includes/resources/tgm/class-tgm-plugin-activation.php' );
+
+	// Hook required plugins function to the tgmpa_register action
+	add_action( 'tgmpa_register', function(){
+
+		// Create the required plugins array
+		$plugins = array(
+			array(
+				'name'              => 'BuddyForms',
+				'slug'              => 'buddyforms',
+				'required'          => true,
+			),
+		);
+
+		$config = array(
+			'id'           => 'buddyforms-hf',         // Unique ID for hashing notices for multiple instances of TGMPA.
+			'parent_slug'  => 'edit.php?post_type=buddyforms',            // Parent menu slug.
+			'capability'   => 'manage_options',    // Capability needed to view plugin install page, should be a capability associated with the parent menu used.
+			'has_notices'  => true,                    // Show admin notices or not.
+			'dismissable'  => false,                    // If false, a user cannot dismiss the nag message.
+			'is_automatic' => true,                   // Automatically activate plugins after installation or not.
+		);
+
+		// Call the tgmpa function to register the required plugins
+		tgmpa( $plugins, $config );
+
+	} );
+}, 1, 1);
