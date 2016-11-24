@@ -3,7 +3,7 @@
  Plugin Name: BuddyForms Hook Fields
  Plugin URI: http://buddyforms.com/downloads/buddyforms-hook-fields/
  Description: BuddyForms Hook Fields
- Version: 1.1.8
+ Version: 1.1.9
  Author: svenl77, buddyforms
  Author URI: https://profiles.wordpress.org/svenl77
  Licence: GPLv3

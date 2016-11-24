@@ -3,7 +3,7 @@ Contributors: svenl77, konradS, themekraft, buddyforms
 Tags: buddypress, user, members, profiles, custom post types, taxonomy, frontend posting, frontend editing,hook fields, custom fields, post meta
 Requires at least: 3.9
 Tested up to: 4.6.1
-Stable tag: 1.1.8
+Stable tag: 1.1.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,9 @@ You need the BuddyForms plugin installed for the plugin to work.
 
 
 == Changelog ==
+
+= 1.1.9 =
+Add dependencies management with tgm
 
 = 1.1.8 =
 fixed some smaller issues
