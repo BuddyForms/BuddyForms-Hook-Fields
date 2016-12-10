@@ -3,7 +3,7 @@
  Plugin Name: BuddyForms Hook Fields
  Plugin URI: http://buddyforms.com/downloads/buddyforms-hook-fields/
  Description: BuddyForms Hook Fields
- Version: 1.1.9.1
+ Version: 1.1.9.2
  Author: svenl77, buddyforms
  Author URI: https://profiles.wordpress.org/svenl77
  Licence: GPLv3
@@ -91,7 +91,7 @@ function buddyforms_form_display_element_frontend() {
 		return;
 	}
 
-	if(!isset($post->ID)) {
+	if ( ! isset( $post->ID ) ) {
 		return;
 	}
 
@@ -141,7 +141,7 @@ function buddyforms_form_display_element_frontend() {
 
 				switch ( $customfield['type'] ) {
 					case 'taxonomy':
-							$meta_tmp = get_the_term_list( $post->ID, $customfield['taxonomy'], "<p>", ' - ', "</p>" );
+						$meta_tmp = get_the_term_list( $post->ID, $customfield['taxonomy'], "<p>", ' - ', "</p>" );
 						break;
 					case 'link':
 						$meta_tmp = "<p><a href='" . $customfield_value . "' " . $customfield['name'] . ">" . $customfield_value . " </a></p>";
@@ -151,7 +151,7 @@ function buddyforms_form_display_element_frontend() {
 						break;
 				}
 
-				if (  $meta_tmp  ) {
+				if ( $meta_tmp ) {
 					$post_meta_tmp .= $meta_tmp;
 				}
 
@@ -215,39 +215,39 @@ add_action( 'the_post', 'buddyforms_form_display_element_frontend' );
 //
 // Check the plugin dependencies
 //
-add_action('init', function(){
+add_action( 'init', function () {
 
 	// Only Check for requirements in the admin
-	if(!is_admin()){
+	if ( ! is_admin() ) {
 		return;
 	}
 
 	// Require TGM
-	require ( dirname(__FILE__) . '/includes/resources/tgm/class-tgm-plugin-activation.php' );
+	require( dirname( __FILE__ ) . '/includes/resources/tgm/class-tgm-plugin-activation.php' );
 
 	// Hook required plugins function to the tgmpa_register action
-	add_action( 'tgmpa_register', function(){
+	add_action( 'tgmpa_register', function () {
 
 		// Create the required plugins array
 		if ( ! defined( 'BUDDYFORMS_PRO_VERSION' ) ) {
 			$plugins['buddyforms'] = array(
-				'name'      => 'BuddyForms',
-				'slug'      => 'buddyforms',
-				'required'  => true,
+				'name'     => 'BuddyForms',
+				'slug'     => 'buddyforms',
+				'required' => true,
 			);
+
+
+			$config = array(
+				'id'           => 'buddyforms-tgmpa',
+				'parent_slug'  => 'plugins.php',
+				'capability'   => 'manage_options',
+				'has_notices'  => true,
+				'dismissable'  => false,
+				'is_automatic' => true,
+			);
+
+			// Call the tgmpa function to register the required plugins
+			tgmpa( $plugins, $config );
 		}
-
-		$config = array(
-			'id'           => 'buddyforms-tgmpa',  // Unique ID for hashing notices for multiple instances of TGMPA.
-			'parent_slug'  => 'plugins.php',       // Parent menu slug.
-			'capability'   => 'manage_options',    // Capability needed to view plugin install page, should be a capability associated with the parent menu used.
-			'has_notices'  => true,                // Show admin notices or not.
-			'dismissable'  => false,               // If false, a user cannot dismiss the nag message.
-			'is_automatic' => true,                // Automatically activate plugins after installation or not.
-		);
-
-		// Call the tgmpa function to register the required plugins
-		tgmpa( $plugins, $config );
-
 	} );
-}, 1, 1);
+}, 1, 1 );
