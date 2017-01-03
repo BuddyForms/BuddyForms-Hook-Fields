@@ -44,7 +44,8 @@ function buddyforms_hook_options_into_formfields( $form_fields, $field_type, $fi
 		'checkbox',
 		'taxonomy',
 		'number',
-		'date'
+		'date',
+		'user_website'
 	);
 
 	if ( ! in_array( $field_type, $hook_field_types ) ) {
@@ -144,6 +145,9 @@ function buddyforms_form_display_element_frontend() {
 						$meta_tmp = get_the_term_list( $post->ID, $customfield['taxonomy'], "<p>", ' - ', "</p>" );
 						break;
 					case 'link':
+						$meta_tmp = "<p><a href='" . $customfield_value . "' " . $customfield['name'] . ">" . $customfield_value . " </a></p>";
+						break;
+					case 'user_website':
 						$meta_tmp = "<p><a href='" . $customfield_value . "' " . $customfield['name'] . ">" . $customfield_value . " </a></p>";
 						break;
 					default:
