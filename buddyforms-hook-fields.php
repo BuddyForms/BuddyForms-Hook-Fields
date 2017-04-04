@@ -48,6 +48,8 @@ function buddyforms_hook_options_into_formfields( $form_fields, $field_type, $fi
 		'user_website'
 	);
 
+	$hook_field_types = apply_filters( 'buddyforms_hook_field_types', $hook_field_types );
+
 	if ( ! in_array( $field_type, $hook_field_types ) ) {
 		return $form_fields;
 	}
@@ -151,7 +153,7 @@ function buddyforms_form_display_element_frontend() {
 						$meta_tmp = "<p><a href='" . $customfield_value . "' " . $customfield['name'] . ">" . $customfield_value . " </a></p>";
 						break;
 					default:
-						apply_filters( 'buddyforms_form_element_display_frontend', $customfield );
+						$meta_tmp = apply_filters( 'buddyforms_form_element_display_frontend', $meta_tmp, $customfield );
 						break;
 				}
 
