@@ -2,8 +2,8 @@
 Contributors: svenl77, konradS, themekraft, buddyforms
 Tags: buddypress, user, members, profiles, custom post types, taxonomy, frontend posting, frontend editing,hook fields, custom fields, post meta
 Requires at least: 3.9
-Tested up to: 4.7
-Stable tag: 1.1.9.2
+Tested up to: 4.7.3
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,11 @@ You need the BuddyForms plugin installed for the plugin to work.
 
 
 == Changelog ==
+
+= 1.2 =
+Added Freemius Integration
+Fixed and issue with the dependencies check. The function tgmpa does not accepted an empty array.
+Added user_website as supported field
 
 = 1.1.9.2 =
 Fixed and issue with the dependencies check. The function tgmpa does not accepted an empty array.
