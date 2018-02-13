@@ -2,8 +2,8 @@
 Contributors: svenl77, konradS, themekraft, buddyforms
 Tags: buddypress, user, members, profiles, custom post types, taxonomy, frontend posting, frontend editing,hook fields, custom fields, post meta
 Requires at least: 3.9
-Tested up to: 4.7.3
-Stable tag: 1.2
+Tested up to: 4.9.4
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,48 +62,51 @@ You need the BuddyForms plugin installed for the plugin to work.
 
 == Changelog ==
 
+= 1.2.1 =
+* Added a new option to display all form elements as table on the single under the post content
+
 = 1.2 =
-Added Freemius Integration
-Fixed and issue with the dependencies check. The function tgmpa does not accepted an empty array.
-Added user_website as supported field
+* Added Freemius Integration
+* Fixed and issue with the dependencies check. The function tgmpa does not accepted an empty array.
+* Added user_website as supported field
 
 = 1.1.9.2 =
-Fixed and issue with the dependencies check. The function tgmpa does not accepted an empty array.
+* Fixed and issue with the dependencies check. The function tgmpa does not accepted an empty array.
 
 = 1.1.9.1 =
-Fixed an issue with the dependencies management. If pro was activated it still ask for the free version. Fixed now with a new default BUDDYFORMS_PRO_VERSION in the core to check if the pro is active.
+* Fixed an issue with the dependencies management. If pro was activated it still ask for the free version. Fixed now with a new default BUDDYFORMS_PRO_VERSION in the core to check if the pro is active.
 
 = 1.1.9 =
-Add dependencies management with tgm
+* Add dependencies management with tgm
 
 = 1.1.8 =
-fixed some smaller issues
-fixed some notice of undefined index
+* fixed some smaller issues
+* fixed some notice of undefined index
 
 = 1.1.7 =
-Make it work with the latest version of buddyforms. the buddyforms array has changed so I adjust the code too the new structure
-Limit the hook options to supported form elements
+* Make it work with the latest version of buddyforms. the buddyforms array has changed so I adjust the code too the new structure
+* Limit the hook options to supported form elements
 
 = 1.1.6 =
-Make it work with the latest version of BuddyForms. the BuddyForms array has changed so I adjust the code too the new structure
-limit the hook options to supported form elements
+* Make it work with the latest version of BuddyForms. the BuddyForms array has changed so I adjust the code too the new structure
+* limit the hook options to supported form elements
 
 = 1.1.5 =
-change the url to BuddyForms.com
-move the options to the new section addons
+* change the url to BuddyForms.com
+* move the options to the new section addons
 
 = 1.1.4 =
-Fixed a issue with the checkbox form element. Props to Thomas for the detailed issue Report.
+* Fixed a issue with the checkbox form element. Props to Thomas for the detailed issue Report.
 
 = 1.1.3 =
-Reduce the query for a better performance
-Clean up the code
+* Reduce the query for a better performance
+* Clean up the code
 
 = 1.1.2 =
-Fixed some bugs reported by users.
+* Fixed some bugs reported by users.
 
 = 1.1 =
-Spelling Corrections
+* Spelling Corrections
 
 = 1.0 =
-final 1.0 version
+* final 1.0 version
