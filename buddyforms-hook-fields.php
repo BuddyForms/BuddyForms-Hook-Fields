@@ -223,6 +223,9 @@ add_action( 'the_post', 'buddyforms_form_display_element_frontend' );
 //
 add_action( 'init', function () {
 
+
+	require( dirname( __FILE__ ) . '/includes/list-all-post-fields.php' );
+
 	// Only Check for requirements in the admin
 	if ( ! is_admin() ) {
 		return;
@@ -337,3 +340,5 @@ if ( bhf_fs_is_parent_active_and_loaded() ) {
 	// Even though the parent is not activated, execute add-on for activation / uninstall hooks.
 	bhf_fs_init();
 }
+
+
