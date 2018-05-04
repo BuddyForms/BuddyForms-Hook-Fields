@@ -4,6 +4,10 @@ add_filter( 'the_content', 'buddyforms_list_all_post_fields', 50, 1 );
 function buddyforms_list_all_post_fields($content) {
 	global $buddyforms, $post;
 
+	if( ! is_single() ){
+		return $content;
+	}
+
 	$form_slug = get_post_meta( $post->ID, '_bf_form_slug', true );
 
 	if( ! $form_slug ){
@@ -20,6 +24,10 @@ function buddyforms_list_all_post_fields($content) {
 
 	if( isset($buddyforms[ $form_slug ]['form_fields'] ) ){
 		foreach ( $buddyforms[ $form_slug ]['form_fields'] as $key => $field ) {
+
+				if( $field['slug'] == 'buddyforms_form_content' || $field['slug'] == 'buddyforms_form_title' || $field['slug'] == 'featured_image' || $field['type'] == 'hidden'  ){
+				continue;
+			}
 
 			$value = get_post_meta($post->ID, $field['slug'], true);
 
