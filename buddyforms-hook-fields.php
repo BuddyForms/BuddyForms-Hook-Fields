@@ -168,7 +168,9 @@ function buddyforms_form_display_element_frontend() {
 
 
 				if ( isset( $customfield['hook'] ) && ! empty( $customfield['hook'] ) ) {
-					add_action( $customfield['hook'], create_function( '', 'echo  "' . addcslashes( $post_meta_tmp, '"' ) . '";' ) );
+					add_action( $customfield['hook'], function () use ( $post_meta_tmp ) {
+						echo addcslashes( $post_meta_tmp, '"' );
+					} );
 				}
 
 				if ( is_single() && isset( $customfield['display'] ) ) {
@@ -197,19 +199,35 @@ function buddyforms_form_display_element_frontend() {
 	if ( is_single() ) {
 
 		if ( $before_the_title ) {
-			add_filter( 'the_title', create_function( '$content,$id', 'if(is_single() && $id == get_the_ID()) { return "' . addcslashes( $before_the_title, '"' ) . '$content"; } return $content;' ), 10, 2 );
+			add_filter( 'the_title', function ( $content, $id ) use ( $before_the_title ) {
+				if ( is_single() && $id == get_the_ID() ) {
+					return addcslashes( $before_the_title, '"' ) . $content;
+				}
+
+				return $content;
+			}, 9999, 2 );
 		}
 
 		if ( $after_the_title ) {
-			add_filter( 'the_title', create_function( '$content,$id', 'if(is_single() && $id == get_the_ID()) { return "$content' . addcslashes( $after_the_title, '"' ) . '"; } return $content;' ), 10, 2 );
+			add_filter( 'the_title', function ( $content, $id ) use ( $before_the_title ) {
+				if ( is_single() && $id == get_the_ID() ) {
+					return $content . addcslashes( $before_the_title, '"' );
+				}
+
+				return $content;
+			}, 9999, 2 );
 		}
 
 		if ( $before_the_content ) {
-			add_filter( 'the_content', create_function( '', 'return "' . addcslashes( $before_the_content . $post->post_content, '"' ) . '";' ) );
+			add_filter( 'the_content', function ( $content ) use ( $before_the_content ) {
+				return addcslashes( $before_the_content, '"' ) . $content;
+			}, 9999 );
 		}
 
 		if ( $after_the_content ) {
-			add_filter( 'the_content', create_function( '', 'return "' . addcslashes( $post->post_content . $after_the_content, '"' ) . '";' ) );
+			add_filter( 'the_content', function ( $content ) use ( $before_the_content ) {
+				return $content . addcslashes( $before_the_content, '"' );
+			}, 9999 );
 		}
 
 	}
@@ -324,10 +342,7 @@ function bhf_fs_init() {
 	if ( bhf_fs_is_parent_active_and_loaded() ) {
 		// Init Freemius.
 		bhf_fs();
-
 		// Parent is active, add your init code here.
-	} else {
-		// Parent is inactive, add your error handling here.
 	}
 }
 
