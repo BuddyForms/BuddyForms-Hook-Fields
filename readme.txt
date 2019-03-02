@@ -3,7 +3,7 @@ Contributors: svenl77, konradS, themekraft, buddyforms
 Tags: buddypress, user, members, profiles, custom post types, taxonomy, frontend posting, frontend editing,hook fields, custom fields, post meta
 Requires at least: 3.9
 Tested up to: 4.9
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,9 @@ You need the BuddyForms plugin installed for the plugin to work.
 
 
 == Changelog ==
+
+= 1.2.3 -  Mar. 02 2019 =
+* Freemius SDK Update
 
 = 1.2.2 =
 * Remove create function to use closures.
