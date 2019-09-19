@@ -33,6 +33,10 @@ add_filter( 'buddyforms_formbuilder_fields_options', 'buddyforms_hook_options_in
 function buddyforms_hook_options_into_formfields( $form_fields, $field_type, $field_id ) {
 	global $post;
 
+	if ( empty( $post ) ) {
+		return $form_fields;
+	}
+
 	$buddyform = get_post_meta( $post->ID, '_buddyforms_options', true );
 
 	$hook_field_types = array(
