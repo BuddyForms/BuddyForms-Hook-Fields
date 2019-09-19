@@ -1,15 +1,15 @@
 <?php
 /*
- Plugin Name: BuddyForms Hook Fields
- Plugin URI: https://themekraft.com/products/buddyforms-hook-fields/
- Description: BuddyForms Hook Fields
- Version: 1.2.3
- Author: ThemeKraft
- Author URI: https://themekraft.com/buddyforms/
- Licence: GPLv3
- Network: false
- Text Domain: buddyforms
-
+ * Plugin Name: BuddyForms Hook Fields
+ * Plugin URI: https://themekraft.com/products/buddyforms-hook-fields/
+ * Description: BuddyForms Hook Fields
+ * Version: 1.2.4
+ * Author: ThemeKraft
+ * Author URI: https://themekraft.com/buddyforms/
+ * Licence: GPLv3
+ * Network: false
+ * Text Domain: buddyforms
+ * Svn: buddyforms-hook-fields
  *****************************************************************************
  *
  * This script is free software; you can redistribute it and/or modify

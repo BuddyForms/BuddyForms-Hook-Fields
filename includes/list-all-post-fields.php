@@ -44,11 +44,7 @@ function buddyforms_list_all_post_fields($content) {
                     if ( $attachments ){
                         $field_value ='';
                         foreach ( $attachments as $attachment_id ){
-
-                            $attachment_metadat = get_post( $attachment_id );
-                            $field_value.= ' <div class="bf_attachment_img">
-                                    ' . wp_get_attachment_image( $attachment_id, array( 64, 64 ), true ) . '
-                                    </div>';
+                            $field_value.= ' <div class="bf_attachment_img">' . wp_get_attachment_image( $attachment_id, array( 64, 64 ), true ) . '</div>';
                         }
                     }
                     break;
