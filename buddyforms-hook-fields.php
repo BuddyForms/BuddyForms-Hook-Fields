@@ -149,7 +149,17 @@ function buddyforms_form_display_element_frontend() {
 
 				switch ( $customfield['type'] ) {
 					case 'taxonomy':
-						$meta_tmp = get_the_term_list( $post->ID, $customfield['taxonomy'], "<p>", ' - ', "</p>" );
+                        if ( is_array( $customfield_value ) ) {
+                            foreach ( $customfield_value as $cat ) {
+                                $term    = get_term( $cat, $customfield['taxonomy'] );
+                                $terms[] = $term->name;
+                            }
+                            $meta_tmp ='<p>'. implode( ',', $terms ).'</p>';
+                        } else {
+                            $term        = get_term( $customfield_value, $customfield['taxonomy'] );
+                            $meta_tmp = $term->name;
+                        }
+						//$meta_tmp = get_the_term_list( $post->ID, $customfield['taxonomy'], "<p>", ' - ', "</p>" );
 						break;
 					case 'link':
 						$meta_tmp = "<p><a href='" . $customfield_value . "' " . $customfield['name'] . ">" . $customfield_value . " </a></p>";
@@ -213,9 +223,9 @@ function buddyforms_form_display_element_frontend() {
 		}
 
 		if ( $after_the_title ) {
-			add_filter( 'the_title', function ( $content, $id ) use ( $before_the_title ) {
+			add_filter( 'the_title', function ( $content, $id ) use ( $after_the_title ) {
 				if ( is_single() && $id == get_the_ID() ) {
-					return $content . addcslashes( $before_the_title, '"' );
+					return $content . addcslashes( $after_the_title, '"' );
 				}
 
 				return $content;
@@ -229,8 +239,12 @@ function buddyforms_form_display_element_frontend() {
 		}
 
 		if ( $after_the_content ) {
-			add_filter( 'the_content', function ( $content ) use ( $before_the_content ) {
-				return $content . addcslashes( $before_the_content, '"' );
+
+			add_filter( 'the_content', function ( $content ) use ( $after_the_content ) {
+                $query = get_post(get_the_ID());
+                $result = $query->post_content. addcslashes( $after_the_content, '"' );
+                $content=str_replace($query->post_content,$result,$content);
+				return $content;
 			}, 9999 );
 		}
 
