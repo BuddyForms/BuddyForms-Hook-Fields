@@ -48,8 +48,11 @@ function buddyforms_hook_options_into_formfields( $form_fields, $field_type, $fi
 		'radiobutton',
 		'checkbox',
 		'taxonomy',
+		'category',
 		'number',
 		'date',
+		'upload',
+		'file',
 		'user_website'
 	);
 
@@ -148,8 +151,20 @@ function buddyforms_form_display_element_frontend() {
 
 
 				switch ( $customfield['type'] ) {
+                    case 'file':
+                    case 'upload':
+                        $attachments = array_filter( explode( ',', $customfield_value  ) );
+                        if ( $attachments ){
+                            $meta_tmp ='';
+                            foreach ( $attachments as $attachment_id ){
+                                $meta_tmp.= ' <div class="bf_attachment_img">' . wp_get_attachment_image( $attachment_id, array( 200, 200 ), true ) . '</div>';
+                            }
+                        }
+                        break;
 					case 'taxonomy':
+                    case 'category':
                         if ( is_array( $customfield_value ) ) {
+                            $terms = Array();
                             foreach ( $customfield_value as $cat ) {
                                 $term    = get_term( $cat, $customfield['taxonomy'] );
                                 $terms[] = $term->name;
@@ -215,7 +230,7 @@ function buddyforms_form_display_element_frontend() {
 		if ( $before_the_title ) {
 			add_filter( 'the_title', function ( $content, $id ) use ( $before_the_title ) {
 				if ( is_single() && $id == get_the_ID() ) {
-					return addcslashes( $before_the_title, '"' ) . $content;
+					return  $before_the_title. $content;
 				}
 
 				return $content;
@@ -225,7 +240,7 @@ function buddyforms_form_display_element_frontend() {
 		if ( $after_the_title ) {
 			add_filter( 'the_title', function ( $content, $id ) use ( $after_the_title ) {
 				if ( is_single() && $id == get_the_ID() ) {
-					return $content . addcslashes( $after_the_title, '"' );
+					return $content .  $after_the_title;
 				}
 
 				return $content;
@@ -234,7 +249,7 @@ function buddyforms_form_display_element_frontend() {
 
 		if ( $before_the_content ) {
 			add_filter( 'the_content', function ( $content ) use ( $before_the_content ) {
-				return addcslashes( $before_the_content, '"' ) . $content;
+				return  $before_the_content . $content;
 			}, 9999 );
 		}
 
@@ -242,7 +257,7 @@ function buddyforms_form_display_element_frontend() {
 
 			add_filter( 'the_content', function ( $content ) use ( $after_the_content ) {
                 $query = get_post(get_the_ID());
-                $result = $query->post_content. addcslashes( $after_the_content, '"' );
+                $result = $query->post_content.  $after_the_content;
                 $content=str_replace($query->post_content,$result,$content);
 				return $content;
 			}, 9999 );
