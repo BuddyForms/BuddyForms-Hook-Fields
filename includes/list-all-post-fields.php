@@ -40,6 +40,7 @@ function buddyforms_list_all_post_fields($content) {
 
 			switch ( $field['type'] ) {
                 case 'file':
+                case 'upload':
                     $attachments = array_filter( explode( ',', $field_value  ) );
                     if ( $attachments ){
                         $field_value ='';
@@ -49,7 +50,9 @@ function buddyforms_list_all_post_fields($content) {
                     }
                     break;
 				case 'taxonomy':
+                case 'category':
 					if ( is_array( $value ) ) {
+                        $terms = Array();
 						foreach ( $value as $cat ) {
 							$term    = get_term( $cat, $field['taxonomy'] );
 							$terms[] = $term->name;
