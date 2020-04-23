@@ -3,7 +3,7 @@ Contributors: svenl77, konradS, themekraft, buddyforms, gfirem, marin250189
 Tags: buddypress, user, members, profiles, custom post types, taxonomy, frontend posting, frontend editing,hook fields, custom fields, post meta
 Requires at least: 3.9
 Tested up to: 5.0
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,12 @@ You need the BuddyForms plugin installed for the plugin to work.
 
 
 == Changelog ==
+= 1.3.1 - 23 April 2020 =
+* Removed the limitation of the hook tab to appear in all form elements.
+* Added a custom post type to handle the templates.
+* Added a security to make all template private.
+* Getting the form element output form buddyforms to show the table values.
+
 = 1.3.0 - 27 March 2020 =
 * Added option to use a page as template to customize the single post view with form shortcodes.
 
