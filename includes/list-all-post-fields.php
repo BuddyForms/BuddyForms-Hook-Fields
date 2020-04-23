@@ -129,11 +129,12 @@ function buddyforms_form_display_element_frontend() {
 	$before_the_content = false;
 	$after_the_content  = false;
 
-	foreach ( $buddyforms[ $form_slug ]['form_fields'] as $key => $customfield ) :
+	foreach ( $buddyforms[ $form_slug ]['form_fields'] as $key => $customfield ) {
 
-		if ( ! empty( $customfield['slug'] ) && ( ! empty( $customfield['hook'] ) || is_single() ) ) :
+		if ( ! empty( $customfield['slug'] ) && ( ! empty( $customfield['hook'] ) || is_single() ) ) {
 
-			$customfield_value = get_post_meta( $post->ID, $customfield['slug'], true );
+			$field             = buddyforms_get_field_with_meta( $form_slug, $post->ID, $customfield['slug'] );
+			$customfield_value = ! empty( $field['value'] ) ? $field['value'] : apply_filters( 'buddyforms_field_shortcode_empty_value', '', $field, $form_slug, $post->ID, $field['slug'] );
 
 			if ( ! empty( $customfield_value ) ) {
 				$post_meta_tmp = '<div class="post_meta ' . $customfield['slug'] . '">';
@@ -149,46 +150,8 @@ function buddyforms_form_display_element_frontend() {
 					$meta_tmp = "<p>" . $customfield_value . "</p>";
 				}
 
-
-				switch ( $customfield['type'] ) {
-					case 'file':
-					case 'upload':
-						$attachments = array_filter( explode( ',', $customfield_value ) );
-						if ( $attachments ) {
-							$meta_tmp = '';
-							foreach ( $attachments as $attachment_id ) {
-								$meta_tmp .= ' <div class="bf_attachment_img">' . wp_get_attachment_image( $attachment_id, array( 200, 200 ), true ) . '</div>';
-							}
-						}
-						break;
-					case 'taxonomy':
-					case 'category':
-						if ( is_array( $customfield_value ) ) {
-							$terms = Array();
-							foreach ( $customfield_value as $cat ) {
-								$term    = get_term( $cat, $customfield['taxonomy'] );
-								$terms[] = $term->name;
-							}
-							$meta_tmp = '<p>' . implode( ',', $terms ) . '</p>';
-						} else {
-							$term     = get_term( $customfield_value, $customfield['taxonomy'] );
-							$meta_tmp = $term->name;
-						}
-						//$meta_tmp = get_the_term_list( $post->ID, $customfield['taxonomy'], "<p>", ' - ', "</p>" );
-						break;
-					case 'link':
-						$meta_tmp = "<p><a href='" . $customfield_value . "' " . $customfield['name'] . ">" . $customfield_value . " </a></p>";
-						break;
-					case 'user_website':
-						$meta_tmp = "<p><a href='" . $customfield_value . "' " . $customfield['name'] . ">" . $customfield_value . " </a></p>";
-						break;
-					default:
-						$meta_tmp = apply_filters( 'buddyforms_form_element_display_frontend', $meta_tmp, $customfield );
-						break;
-				}
-
 				if ( $meta_tmp ) {
-					$post_meta_tmp .= $meta_tmp;
+					$post_meta_tmp .= apply_filters( 'buddyforms_form_element_display_frontend', $meta_tmp, $customfield );
 				}
 
 				$post_meta_tmp .= '</div>';
@@ -218,12 +181,9 @@ function buddyforms_form_display_element_frontend() {
 							break;
 					}
 				}
-
 			}
-
-		endif;
-
-	endforeach;
+		}
+	}
 
 	if ( is_single() ) {
 
