@@ -38,6 +38,7 @@
 add_action( 'init', function () {
 	require( dirname( __FILE__ ) . '/includes/list-all-post-fields.php' );
 	require( dirname( __FILE__ ) . '/includes/form-options.php' );
+	require( dirname( __FILE__ ) . '/includes/templates-handler.php' );
 
 	// Only Check for requirements in the admin
 	if ( ! is_admin() ) {

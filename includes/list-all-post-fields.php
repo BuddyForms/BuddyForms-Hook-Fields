@@ -46,7 +46,9 @@ function buddyforms_list_all_post_fields( $content ) {
 	if ( $is_post_template_enabled ) {
 		if ( class_exists( 'Elementor\Plugin' ) ) {
 			$template_content = Elementor\Plugin::instance()->frontend->get_builder_content( $post_template_id, true );
-		} else {
+		}
+
+		if ( empty( $template_content ) ) {
 			$template_content = get_the_content( null, false, $post_template_id );
 			$template_content = apply_filters( 'the_content', $template_content );
 			$template_content = str_replace( ']]>', ']]&gt;', $template_content );

@@ -30,25 +30,27 @@ function buddyforms_list_all_post_fields_admin_settings_sidebar_metabox_html() {
 
 	$form_setup = array();
 
+	//Add field data as table
+	$hook_fields_list_on_single = isset( $buddyform['hook_fields_list_on_single'] ) ? $buddyform['hook_fields_list_on_single'] : '';
+	$form_setup[]               = new Element_Checkbox( "<b>" . __( 'Add Form Elements as Table', 'buddyforms' ) . "</b>", "buddyforms_options[hook_fields_list_on_single]", array( "integrate" => "Integrate this Form" ), array( 'value' => $hook_fields_list_on_single, 'shortDesc' => __( 'This option will not work if you have a Template page selected.', 'buddyforms' ) ) );
+
 	//Add option to select the page to use as template
 	// Get all allowed pages
 	$form_attached_page = array();
 	if ( ! empty( $buddyform['attached_page'] ) ) {
 		$form_attached_page[] = $buddyform['attached_page'];
 	}
-	$all_pages = buddyforms_get_all_pages( 'id', 'form_builder', true, $form_attached_page, __( '-No override-', 'buddyforms' ) );
+	$all_pages = buddyforms_hooks_fields_get_templates();
 	$attached_page                    = isset( $buddyform['hook_fields_template_page'] ) ? $buddyform['hook_fields_template_page'] : '';
 	$form_setup[] = new Element_Select( '<b>' . __( "Template page", 'buddyforms' ) . '</b>', "buddyforms_options[hook_fields_template_page]", $all_pages, array(
 		'value'     => $attached_page,
 		'shortDesc' => sprintf( '%s <a href="https://docs.buddyforms.com/article/641-page-template?utm_source=plugin" target="_blank">%s</a>', __( 'This is a template page to override the output of a single post.', 'buddyforms' ), __( 'Read more in the documentation.', 'buddyforms' ) ),
 		'id'        => 'attached_page',
 	) );
+
 	//Add option to hide the title
 	$hide_title   = isset( $buddyform['hook_fields_hide_title'] ) ? $buddyform['hook_fields_hide_title'] : '';
 	$form_setup[] = new Element_Checkbox( '<b>' . __( 'Hide the title ', 'buddyforms' ) . '</b>', "buddyforms_options[hook_fields_hide_title]", array( 'yes' => __( 'Disable the post title', 'buddyforms' ) ), array( 'value' => $hide_title, 'shortDesc' => __( 'Use this option if you override the Title with a template shortcode.', 'buddyforms' ) ) );
-	//Add field data as table
-	$hook_fields_list_on_single = isset( $buddyform['hook_fields_list_on_single'] ) ? $buddyform['hook_fields_list_on_single'] : '';
-	$form_setup[]               = new Element_Checkbox( "<b>" . __( 'Add Form Elements as Table', 'buddyforms' ) . "</b>", "buddyforms_options[hook_fields_list_on_single]", array( "integrate" => "Integrate this Form" ), array( 'value' => $hook_fields_list_on_single, 'shortDesc' => __( 'This option will not work if you have a Template page selected.', 'buddyforms' ) ) );
 
 	buddyforms_display_field_group_table( $form_setup );
 }
@@ -75,29 +77,6 @@ function buddyforms_hook_options_into_formfields( $form_fields, $field_type, $fi
 		return $form_fields;
 	}
 
-	$hook_field_types = array(
-		'text',
-		'textarea',
-		'link',
-		'mail',
-		'dropdown',
-		'radiobutton',
-		'checkbox',
-		'taxonomy',
-		'category',
-		'number',
-		'date',
-		'upload',
-		'file',
-		'user_website'
-	);
-
-	$hook_field_types = apply_filters( 'buddyforms_hook_field_allowed_types', $hook_field_types );
-
-	if ( ! in_array( $field_type, $hook_field_types ) ) {
-		return $form_fields;
-	}
-
 	$hooks = array( 'no', 'before_the_title', 'after_the_title', 'before_the_content', 'after_the_content' );
 	$hooks = apply_filters( 'buddyforms_hook_field_form_element_position', $hooks );
 
@@ -108,20 +87,26 @@ function buddyforms_hook_options_into_formfields( $form_fields, $field_type, $fi
 		$display = $buddyform['form_fields'][ $field_id ]['display'];
 	}
 
-	$form_fields['hooks']['display'] = new Element_Select( "Display? <i>This only works for the single view</i>", "buddyforms_options[form_fields][" . $field_id . "][display]", $hooks, array( 'value' => $display ) );
+	$form_fields['hooks']['display'] = new Element_Select( "Display where?", "buddyforms_options[form_fields][" . $field_id . "][display]", $hooks, array(
+		'value' => $display,
+		'shortDesc' => __( 'This only works for the single view.', 'buddyforms' ),
+	) );
 
 	$hook = '';
 	if ( isset( $buddyform['form_fields'][ $field_id ]['hook'] ) ) {
 		$hook = $buddyform['form_fields'][ $field_id ]['hook'];
 	}
 
-	$form_fields['hooks']['hook'] = new Element_Textbox( "Hook: <i>Add hook name works global</i>", "buddyforms_options[form_fields][" . $field_id . "][hook]", array( 'value' => $hook ) );
+	$form_fields['hooks']['hook'] = new Element_Textbox( "Add <b>hook</b> name", "buddyforms_options[form_fields][" . $field_id . "][hook]", array(
+		'value' => $hook,
+		'shortDesc' => __( 'This option give the ability to place the output of the field to other action. It works global.', 'buddyforms' ),
+	) );
 
 	$display_name = 'false';
 	if ( isset( $buddyform['form_fields'][ $field_id ]['display_name'] ) ) {
 		$display_name = $buddyform['form_fields'][ $field_id ]['display_name'];
 	}
-	$form_fields['hooks']['display_name'] = new Element_Checkbox( "Display name?", "buddyforms_options[form_fields][" . $field_id . "][display_name]", array( '' ), array(
+	$form_fields['hooks']['display_name'] = new Element_Checkbox( "Display the label?", "buddyforms_options[form_fields][" . $field_id . "][display_name]", array( '' => __( 'Show the Field Label with the Field value.', 'buddyforms' )), array(
 		'value' => $display_name,
 		'id'    => "buddyforms_options[form_fields][" . $field_id . "][display_name]"
 	) );
