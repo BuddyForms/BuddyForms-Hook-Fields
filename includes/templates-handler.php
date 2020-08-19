@@ -17,7 +17,7 @@ function buddyforms_hooks_fields_template_post_type() {
 		'capability_type'     => 'post',
 		'hierarchical'        => false,
 		'show_in_rest'        => false,
-		'rewrite'             => true,
+//		'rewrite'             => true,
 		'supports'            => array(
 			'title',
 			'editor',
