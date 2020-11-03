@@ -61,6 +61,9 @@ You need the BuddyForms plugin installed for the plugin to work.
 
 
 == Changelog ==
+= 1.3.2 - 2 Nov 2020 =
+* Fixed: Show upload field value.
+
 = 1.3.1 - 23 April 2020 =
 * Removed the limitation of the hook tab to appear in all form elements.
 * Added a custom post type to handle the templates.
