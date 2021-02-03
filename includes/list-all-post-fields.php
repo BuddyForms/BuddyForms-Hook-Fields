@@ -29,7 +29,7 @@ function buddyforms_list_all_post_fields( $content ) {
 	}
 
 	$add_table_content        = ( ! empty( $buddyforms[ $form_slug ]['hook_fields_list_on_single'] ) ) ? $buddyforms[ $form_slug ]['hook_fields_list_on_single'] : '';
-	$post_template_id         = ( ! empty( $buddyforms[ $form_slug ]['hook_fields_template_page'] ) ) ? $buddyforms[ $form_slug ]['hook_fields_template_page'] : 'none';
+	$post_template_id         = ( ! empty( $buddyforms[ $form_slug ]['hook_fields_template_page'] ) ) ? (int) $buddyforms[ $form_slug ]['hook_fields_template_page'] : 'none';
 	$is_post_template_enabled = ( ! empty( $post_template_id ) && $post_template_id !== 'none' );
 
 	$hide_title = ( ! empty( $buddyforms[ $form_slug ]['hook_fields_hide_title'] ) ) ? $buddyforms[ $form_slug ]['hook_fields_hide_title'] : '';
@@ -248,11 +248,7 @@ function buddyforms_form_display_element_frontend() {
 		if ( $after_the_content ) {
 
 			add_filter( 'the_content', function ( $content ) use ( $after_the_content ) {
-				$query   = get_post( get_the_ID() );
-				$result  = $query->post_content . $after_the_content;
-				$content = str_replace( $query->post_content, $result, $content );
-
-				return $content;
+				return $content . $after_the_content;
 			}, 9999 );
 		}
 
