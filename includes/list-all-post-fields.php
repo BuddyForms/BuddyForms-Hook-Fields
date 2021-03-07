@@ -76,17 +76,18 @@ function buddyforms_list_all_post_fields( $content ) {
 				$striped = ( $striped_c ++ % 2 == 1 ) ? "style='background: #eee;'" : '';
 
 				if ( isset( $field['slug'] ) ) {
-				    if($field['type']==='upload'){
-				        $upload_field_val = get_post_meta($post->ID,$field['name'],true);
-                        $media_items = explode(',', $upload_field_val);
+				    if ( $field['type'] === 'upload' || $field['type'] === 'file' ){
+				        $upload_field_val = get_post_meta( $post->ID, $field['slug'] , true);
+                        $media_items = explode( ',', $upload_field_val );
                         $result = "";
-                        foreach ($media_items as $attachment_item){
-                            $attachment_full_url = wp_get_attachment_url($attachment_item);
-                            $default_thumbnail = plugin_dir_url(__FILE__).'/assets/images/multimedia.png';
-                            $attachment_thumbnail_url = wp_get_attachment_thumb_url( $attachment_item) === false? $default_thumbnail : wp_get_attachment_thumb_url( $attachment_item);
-                            $result .= "<a href='".$attachment_full_url."' target='_blank'> <img src='".$attachment_thumbnail_url."' /></a>" ."," ;
+                        foreach ( $media_items as $attachment_item ){
+                            $attachment_full_url 	  = wp_get_attachment_url( $attachment_item );
+                            $default_thumbnail 		  = plugin_dir_url (__FILE__ ).'/assets/images/multimedia.png';
+                            $attachment_thumbnail_url = wp_get_attachment_thumb_url( $attachment_item ) === false ? $default_thumbnail : wp_get_attachment_thumb_url( $attachment_item );
+                            
+							$result .= "<a href='".$attachment_full_url."' target='_blank'> <img src='" . $attachment_thumbnail_url . "' /></a>";
                         }
-                        $new_content .= "<tr " . $striped . "><td><strong>" . $field['name'] . "</strong> </td><td>" .trim($result,','). "</td></tr>";
+                        $new_content .= "<tr " . $striped . "><td><strong>" . $field['name'] . "</strong> </td><td>" .trim( $result ). "</td></tr>";
                     }
 				    else{
                         $new_content .= "<tr " . $striped . "><td><strong>" . $field['name'] . "</strong> </td><td>" . $field_value . "</td></tr>";
@@ -146,7 +147,7 @@ function buddyforms_form_display_element_frontend() {
 	$before_the_content = false;
 	$after_the_content  = false;
 
-	foreach ( $buddyforms[ $form_slug ]['form_fields'] as $key => $customfield ) {
+	foreach ( $buddyforms[ $form_slug ]['form_fields'] as $field_id => $customfield ) {
 
 		if ( ! empty( $customfield['slug'] ) && ( ! empty( $customfield['hook'] ) || is_single() ) ) {
 
@@ -159,20 +160,30 @@ function buddyforms_form_display_element_frontend() {
 				if ( isset( $customfield['display_name'] ) ) {
 					$post_meta_tmp .= '<label>' . $customfield['name'] . '</label>';
 				}
-                /// here
-                if($field['type']==='upload'){
-                    $upload_field_val = get_post_meta($post->ID,$field['name'],true);
-                    $media_items = explode(',', $upload_field_val);
-                    $result = array();
-                    foreach ($media_items as $attachment_item){
-                        $attachment_full_url = wp_get_attachment_url($attachment_item);
-                        $default_thumbnail = plugin_dir_url(__FILE__).'/assets/images/multimedia.png';
-                        $attachment_thumbnail_url = wp_get_attachment_thumb_url( $attachment_item) === false? $default_thumbnail : wp_get_attachment_thumb_url( $attachment_item);
-                        $result[]= "<a href='".$attachment_full_url."' target='_blank'> <img src='".$attachment_thumbnail_url."' /></a>";
+
+                if ( $field['type'] === 'upload' || $field['type'] === 'file' ){
+                    $upload_field_val = get_post_meta( $post->ID, $field['slug'], true );
+                    $media_items 	  = explode( ',', $upload_field_val );
+                    $result           = array();
+					$thumbnail_size   = 'thumbnail';
+
+					if ( isset( $buddyforms[ $form_slug ]['form_fields'][$field_id]['thumbnail_size'] ) ) {
+						$thumbnail_size = $buddyforms[ $form_slug ]['form_fields'][$field_id]['thumbnail_size'];
+					}
+
+                    foreach ( $media_items as $attachment_item ){
+                        $attachment_full_url      = wp_get_attachment_url( $attachment_item );
+						$attachment_thumbnail_url = wp_get_attachment_image_src( $attachment_item, $thumbnail_size );
+
+						if ( ! $attachment_thumbnail_url  ) {
+							$attachment_thumbnail_url = array( plugin_dir_url( __FILE__ ) . '/assets/images/multimedia.png' );
+						}
+
+                        $result[] = "<a href='".$attachment_full_url."' target='_blank'> <img src='" . $attachment_thumbnail_url[0] . "' /></a>";
                     }
-                    $meta_tmp = "<p>" . implode( ',', $result ) . "</p>";
-                }
-                else{
+                    $meta_tmp = implode( '', $result );
+
+                } else{
                     if ( is_array( $customfield_value ) ) {
                         $meta_tmp = "<p>" . implode( ',', $customfield_value ) . "</p>";
                     } else {

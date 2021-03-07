@@ -111,6 +111,23 @@ function buddyforms_hook_options_into_formfields( $form_fields, $field_type, $fi
 		'id'    => "buddyforms_options[form_fields][" . $field_id . "][display_name]"
 	) );
 
+	if ( $field_type === 'upload' || $field_type === 'file' ) {
+
+		$sizes = wp_get_registered_image_subsizes();
+		$sizes = array_keys( $sizes );
+
+		$selected_size = false;
+		if ( isset( $buddyform['form_fields'][$field_id]['thumbnail_size'] ) ) {
+			$selected_size = $buddyform['form_fields'][$field_id]['thumbnail_size'];
+		}
+
+		$form_fields['hooks']['thumbnail_size'] = new Element_Select( "Thumbnail size", "buddyforms_options[form_fields][" . $field_id . "][thumbnail_size]", $sizes, array(
+			'value' => $selected_size,
+			'shortDesc' => __( 'This option give the ability to control the size for uploaded images, Eg: thumbnail, medium, large.', 'buddyforms' ),
+		) );
+
+	}
+
 	$form_fields['hooks']['html_display_end'] = new Element_HTML( '</div>' );
 
 	return $form_fields;
