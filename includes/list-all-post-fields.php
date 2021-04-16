@@ -81,11 +81,13 @@ function buddyforms_list_all_post_fields( $content ) {
                         $media_items = explode( ',', $upload_field_val );
                         $result = "";
                         foreach ( $media_items as $attachment_item ){
-                            $attachment_full_url 	  = wp_get_attachment_url( $attachment_item );
-                            $default_thumbnail 		  = plugin_dir_url (__FILE__ ).'/assets/images/multimedia.png';
-                            $attachment_thumbnail_url = wp_get_attachment_thumb_url( $attachment_item ) === false ? $default_thumbnail : wp_get_attachment_thumb_url( $attachment_item );
-                            
-							$result .= "<a href='".$attachment_full_url."' target='_blank'> <img src='" . $attachment_thumbnail_url . "' /></a>";
+                            if(!empty($attachment_item)){
+                                $attachment_full_url 	  = wp_get_attachment_url( $attachment_item );
+                                $default_thumbnail 		  = plugin_dir_url (__FILE__ ).'/assets/images/multimedia.png';
+                                $attachment_thumbnail_url = wp_get_attachment_thumb_url( $attachment_item ) === false ? $default_thumbnail : wp_get_attachment_thumb_url( $attachment_item );
+
+                                $result .= "<a href='".$attachment_full_url."' target='_blank'> <img src='" . $attachment_thumbnail_url . "' /></a>";
+                            }
                         }
                         $new_content .= "<tr " . $striped . "><td><strong>" . $field['name'] . "</strong> </td><td>" .trim( $result ). "</td></tr>";
                     }
