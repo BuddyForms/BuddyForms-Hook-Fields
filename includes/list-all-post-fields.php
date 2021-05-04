@@ -83,10 +83,42 @@ function buddyforms_list_all_post_fields( $content ) {
                         foreach ( $media_items as $attachment_item ){
                             if(!empty($attachment_item)){
                                 $attachment_full_url 	  = wp_get_attachment_url( $attachment_item );
+                                $file_mime_type           = get_post_mime_type( $attachment_item );
+                                $file_type                = explode("/", $file_mime_type )[0];
+                                $file_type_extension      = explode("/", $file_mime_type )[1];
                                 $default_thumbnail 		  = plugin_dir_url (__FILE__ ).'/assets/images/multimedia.png';
                                 $attachment_thumbnail_url = wp_get_attachment_thumb_url( $attachment_item ) === false ? $default_thumbnail : wp_get_attachment_thumb_url( $attachment_item );
+                                switch ( $file_type ) {
 
-                                $result .= "<a href='".$attachment_full_url."' target='_blank'> <img src='" . $attachment_thumbnail_url . "' /></a>";
+                                    case 'video':
+                                        $result .= "<a href='".$attachment_full_url."' target='_blank'> <video width='150' height='150'> <source src='".$attachment_full_url."' >  </video> </a>";
+                                        break;
+                                    case 'image':
+                                        $result .= "<a href='".$attachment_full_url."' target='_blank'> <img src='" . $attachment_thumbnail_url . "' /></a>";
+                                        break;
+                                    case 'application':
+                                        if( $file_type_extension =='pdf' ){
+                                            $pdf_thumbnail 		  = plugin_dir_url (__FILE__ ).'/assets/images/pdf.png';
+                                            $result .= "<a href='".$attachment_full_url."' target='_blank'> <img  src='" . $pdf_thumbnail . "' /></a>";
+                                        }
+                                        elseif ($file_type_extension =='zip' || $file_type_extension =='x-gzip' || $file_type_extension =='rar' || $file_type_extension =='x-7z-compressed'){
+                                            $compressed_thumbnail 		  = plugin_dir_url (__FILE__ ).'/assets/images/compressed.jpg';
+                                            $result .= "<a href='".$attachment_full_url."' target='_blank'> <img src='" . $compressed_thumbnail . "' /></a>";
+
+                                        }
+                                        else{
+                                            $result .= "<a href='".$attachment_full_url."' target='_blank'> <img src='" . $default_thumbnail . "' /></a>";
+                                        }
+
+                                        break;
+                                    default :
+                                        $result .= "<a href='".$attachment_full_url."' target='_blank'> <img src='" . $default_thumbnail . "' /></a>";
+                                        break;
+
+                                }
+
+
+
                             }
                         }
                         $new_content .= "<tr " . $striped . "><td><strong>" . $field['name'] . "</strong> </td><td>" .trim( $result ). "</td></tr>";
