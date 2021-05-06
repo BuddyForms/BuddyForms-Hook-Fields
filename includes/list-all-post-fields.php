@@ -91,7 +91,7 @@ function buddyforms_list_all_post_fields( $content ) {
                                 switch ( $file_type ) {
 
                                     case 'video':
-                                        $result .= "<a href='".$attachment_full_url."' target='_blank'> <video width='150' height='150'> <source src='".$attachment_full_url."' >  </video> </a>";
+                                        $result .= "<a href='".$attachment_full_url."' target='_blank'> <video width='150' height='150' controls> <source src='".$attachment_full_url."' >  </video> </a>";
                                         break;
                                     case 'image':
                                         $result .= "<a href='".$attachment_full_url."' target='_blank'> <img src='" . $attachment_thumbnail_url . "' /></a>";
@@ -206,14 +206,49 @@ function buddyforms_form_display_element_frontend() {
 					}
 
                     foreach ( $media_items as $attachment_item ){
-                        $attachment_full_url      = wp_get_attachment_url( $attachment_item );
-						$attachment_thumbnail_url = wp_get_attachment_image_src( $attachment_item, $thumbnail_size );
+                        if(!empty($attachment_item)){
+                            $attachment_full_url      = wp_get_attachment_url( $attachment_item );
+                            $attachment_thumbnail_url = wp_get_attachment_image_src( $attachment_item, $thumbnail_size );
+                            $file_mime_type           = get_post_mime_type( $attachment_item );
+                            $file_type                = explode("/", $file_mime_type )[0];
+                            $file_type_extension      = explode("/", $file_mime_type )[1];
+                            if ( ! $attachment_thumbnail_url  ) {
+                                $attachment_thumbnail_url = array( plugin_dir_url( __FILE__ ) . '/assets/images/multimedia.png' );
+                            }
+                            switch ( $file_type ) {
 
-						if ( ! $attachment_thumbnail_url  ) {
-							$attachment_thumbnail_url = array( plugin_dir_url( __FILE__ ) . '/assets/images/multimedia.png' );
-						}
+                                case 'video':
+                                    $result[] = "<a href='".$attachment_full_url."' target='_blank'> <video width='150' height='150' controls> <source src='".$attachment_full_url."' >  </video> </a>";
+                                    break;
+                                case 'image':
+                                    $result[] = "<a href='".$attachment_full_url."' target='_blank'> <img src='" . $attachment_thumbnail_url[0] . "' /></a>";
+                                    break;
+                                case 'application':
+                                    if( $file_type_extension =='pdf' ){
+                                        $pdf_thumbnail 		  = plugin_dir_url (__FILE__ ).'/assets/images/pdf.png';
+                                        $result[] = "<a href='".$attachment_full_url."' target='_blank'> <img  src='" . $pdf_thumbnail . "' /></a>";
+                                    }
+                                    elseif ($file_type_extension =='zip' || $file_type_extension =='x-gzip' || $file_type_extension =='rar' || $file_type_extension =='x-7z-compressed'){
+                                        $compressed_thumbnail 		  = plugin_dir_url (__FILE__ ).'/assets/images/compressed.jpg';
+                                        $result[] = "<a href='".$attachment_full_url."' target='_blank'> <img src='" . $compressed_thumbnail . "' /></a>";
 
-                        $result[] = "<a href='".$attachment_full_url."' target='_blank'> <img src='" . $attachment_thumbnail_url[0] . "' /></a>";
+                                    }
+                                    else{
+                                        $result[] = "<a href='".$attachment_full_url."' target='_blank'> <img src='" . $attachment_thumbnail_url[0] . "' /></a>";
+                                    }
+
+                                    break;
+                                default :
+                                    $result[] = "<a href='".$attachment_full_url."' target='_blank'> <img src='" . $attachment_thumbnail_url[0] . "' /></a>";
+                                    break;
+
+                            }
+
+
+
+
+                        }
+
                     }
                     $meta_tmp = implode( '', $result );
 
