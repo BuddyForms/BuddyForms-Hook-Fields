@@ -17,7 +17,7 @@ function buddyforms_list_all_post_fields( $content ) {
 	if ( ! is_single() ) {
 		return $content;
 	}
-
+	
 	$form_slug = get_post_meta( $post->ID, '_bf_form_slug', true );
 
 	if ( ! $form_slug ) {
@@ -36,6 +36,8 @@ function buddyforms_list_all_post_fields( $content ) {
 	if ( ! isset( $buddyforms[ $form_slug ]['hook_fields_list_on_single'] ) ) {
 		return $content;
 	}
+
+	wp_enqueue_style( 'bf-hook-fields', plugins_url( 'assets/bf-hook-fields.css', __FILE__ ) );
 
 	remove_filter( 'the_content', 'buddyforms_list_all_post_fields', 999 );
 
@@ -88,40 +90,41 @@ function buddyforms_list_all_post_fields( $content ) {
                                 $file_type_extension      = explode("/", $file_mime_type )[1];
                                 $default_thumbnail 		  = plugin_dir_url (__FILE__ ).'/assets/images/multimedia.png';
                                 $attachment_thumbnail_url = wp_get_attachment_thumb_url( $attachment_item ) === false ? $default_thumbnail : wp_get_attachment_thumb_url( $attachment_item );
+
+								$result .= "<a class='image-placeholder' href='".$attachment_full_url."' target='_blank'>";
+
                                 switch ( $file_type ) {
 
                                     case 'video':
-                                        $result .= "<a href='".$attachment_full_url."' target='_blank'> <video width='150' height='150' controls> <source src='".$attachment_full_url."' >  </video> </a>";
+                                        $result .= "<video width='150' height='150' controls> <source src='".$attachment_full_url."' >  </video>";
                                         break;
                                     case 'image':
-                                        $result .= "<a href='".$attachment_full_url."' target='_blank'> <img src='" . $attachment_thumbnail_url . "' /></a>";
+                                        $result .= "<img src='" . $attachment_thumbnail_url . "' />";
                                         break;
-                                    case 'application':
+
+									default :
+									case 'application':
                                         if( $file_type_extension =='pdf' ){
                                             $pdf_thumbnail 		  = plugin_dir_url (__FILE__ ).'/assets/images/pdf.png';
-                                            $result .= "<a href='".$attachment_full_url."' target='_blank'> <img  src='" . $pdf_thumbnail . "' /></a>";
+                                            $result .= "<img src='" . $pdf_thumbnail . "' />";
                                         }
                                         elseif ($file_type_extension =='zip' || $file_type_extension =='x-gzip' || $file_type_extension =='rar' || $file_type_extension =='x-7z-compressed'){
-                                            $compressed_thumbnail 		  = plugin_dir_url (__FILE__ ).'/assets/images/compressed.jpg';
-                                            $result .= "<a href='".$attachment_full_url."' target='_blank'> <img src='" . $compressed_thumbnail . "' /></a>";
+                                            $compressed_thumbnail 		  = plugin_dir_url (__FILE__ ).'/assets/images/compressed.png';
+                                            $result .= "<img src='" . $compressed_thumbnail . "' />";
 
                                         }
-                                        else{
-                                            $result .= "<a href='".$attachment_full_url."' target='_blank'> <img src='" . $default_thumbnail . "' /></a>";
+                                        else {
+                                            $result .= "<img src='" . $default_thumbnail . "' />";
                                         }
 
                                         break;
-                                    default :
-                                        $result .= "<a href='".$attachment_full_url."' target='_blank'> <img src='" . $default_thumbnail . "' /></a>";
-                                        break;
-
                                 }
 
-
+								$result .= '</a>';
 
                             }
                         }
-                        $new_content .= "<tr " . $striped . "><td><strong>" . $field['name'] . "</strong> </td><td>" .trim( $result ). "</td></tr>";
+                        $new_content .= "<tr " . $striped . "><td><strong>" . $field['name'] . "</strong> </td><td><div>" .trim( $result ). "</div></td></tr>";
                     }
 				    else{
                         $new_content .= "<tr " . $striped . "><td><strong>" . $field['name'] . "</strong> </td><td>" . $field_value . "</td></tr>";
@@ -153,28 +156,30 @@ function buddyforms_form_display_element_frontend() {
 	if ( is_admin() ) {
 		return;
 	}
-
+	
 	if ( ! isset( $post->ID ) ) {
 		return;
 	}
-
+	
 	if ( $bf_hooked ) {
 		return;
 	}
-
+	
 	$form_slug = get_post_meta( $post->ID, '_bf_form_slug', true );
-
+	
 	if ( ! isset( $form_slug ) ) {
 		return;
 	}
-
+	
 	if ( ! isset( $buddyforms[ $form_slug ] ) ) {
 		return;
 	}
-
+	
 	if ( ! isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
 		return;
 	}
+
+	wp_enqueue_style( 'bf-hook-fields', plugins_url( 'assets/bf-hook-fields.css', __FILE__ ) );
 
 	$before_the_title   = false;
 	$after_the_title    = false;
@@ -189,7 +194,7 @@ function buddyforms_form_display_element_frontend() {
 			$customfield_value = ! empty( $field['value'] ) ? $field['value'] : apply_filters( 'buddyforms_field_shortcode_empty_value', '', $field, $form_slug, $post->ID, $field['slug'] );
 
 			if ( ! empty( $customfield_value ) ) {
-				$post_meta_tmp = '<div class="post_meta ' . $customfield['slug'] . '">';
+				$post_meta_tmp = '<div class="post_meta bf-hook-field ' . $customfield['slug'] . '">';
 
 				if ( isset( $customfield['display_name'] ) ) {
 					$post_meta_tmp .= '<label>' . $customfield['name'] . '</label>';
@@ -206,50 +211,59 @@ function buddyforms_form_display_element_frontend() {
 					}
 
                     foreach ( $media_items as $attachment_item ){
-                        if(!empty($attachment_item)){
+                        if ( ! empty( $attachment_item ) ){
                             $attachment_full_url      = wp_get_attachment_url( $attachment_item );
                             $attachment_thumbnail_url = wp_get_attachment_image_src( $attachment_item, $thumbnail_size );
                             $file_mime_type           = get_post_mime_type( $attachment_item );
                             $file_type                = explode("/", $file_mime_type )[0];
                             $file_type_extension      = explode("/", $file_mime_type )[1];
-                            if ( ! $attachment_thumbnail_url  ) {
-                                $attachment_thumbnail_url = array( plugin_dir_url( __FILE__ ) . '/assets/images/multimedia.png' );
-                            }
-                            switch ( $file_type ) {
+
+							$registered_sizes = wp_get_registered_image_subsizes();
+							$media_size_width = isset( $registered_sizes[ $thumbnail_size ]['width'] ) ? $registered_sizes[ $thumbnail_size ]['width'] : 150;
+
+							$default_img  = plugin_dir_url (__FILE__ ).'/assets/images/multimedia.png';
+							$media_output = "<a href='" . $attachment_full_url . "' target='_blank'>";
+
+							switch ( $file_type ) {
 
                                 case 'video':
-                                    $result[] = "<a href='".$attachment_full_url."' target='_blank'> <video width='150' height='150' controls> <source src='".$attachment_full_url."' >  </video> </a>";
+									$media_output .= "<video width=". $media_size_width . " controls> <source src='" . $attachment_full_url . "' ></video>";
                                     break;
+
                                 case 'image':
-                                    $result[] = "<a href='".$attachment_full_url."' target='_blank'> <img src='" . $attachment_thumbnail_url[0] . "' /></a>";
+                                    $media_output .= "<img src='" . $attachment_thumbnail_url[0] . "' />";
                                     break;
+
+								default :
                                 case 'application':
-                                    if( $file_type_extension =='pdf' ){
-                                        $pdf_thumbnail 		  = plugin_dir_url (__FILE__ ).'/assets/images/pdf.png';
-                                        $result[] = "<a href='".$attachment_full_url."' target='_blank'> <img  src='" . $pdf_thumbnail . "' /></a>";
-                                    }
-                                    elseif ($file_type_extension =='zip' || $file_type_extension =='x-gzip' || $file_type_extension =='rar' || $file_type_extension =='x-7z-compressed'){
-                                        $compressed_thumbnail 		  = plugin_dir_url (__FILE__ ).'/assets/images/compressed.jpg';
-                                        $result[] = "<a href='".$attachment_full_url."' target='_blank'> <img src='" . $compressed_thumbnail . "' /></a>";
 
+									$media_style   = "style='width: ". $media_size_width . "px;'";
+									$media_output .= "<span class='image-placeholder' " . $media_style . ">";
+									
+                                    if ( $file_type_extension === 'pdf' ){
+                                        $pdf_thumbnail = plugin_dir_url (__FILE__ ) . '/assets/images/pdf.png';
+                                        $media_output  .= "<img src='" . $pdf_thumbnail . "' />";
                                     }
-                                    else{
-                                        $result[] = "<a href='".$attachment_full_url."' target='_blank'> <img src='" . $attachment_thumbnail_url[0] . "' /></a>";
+                                    elseif ($file_type_extension === 'zip' || $file_type_extension =='x-gzip' || $file_type_extension =='rar' || $file_type_extension =='x-7z-compressed'){
+                                        $compressed_thumbnail  = plugin_dir_url (__FILE__ ) . '/assets/images/compressed.png';
+                                        $media_output         .= "<img src='" . $compressed_thumbnail . "' />";
                                     }
+                                    else {
+                                        $media_output .= "<img src='" . $default_img . "' />";
+                                    }
+
+									$media_output .= "<p>". basename( get_attached_file( $attachment_item ) ) ."</p>";
+									$media_output .= "</span>";
 
                                     break;
-                                default :
-                                    $result[] = "<a href='".$attachment_full_url."' target='_blank'> <img src='" . $attachment_thumbnail_url[0] . "' /></a>";
-                                    break;
-
                             }
-
-
-
-
+							
+							
                         }
-
+						$media_output .= '</a>';
+						$result[]     = $media_output;
                     }
+
                     $meta_tmp = implode( '', $result );
 
                 } else{
