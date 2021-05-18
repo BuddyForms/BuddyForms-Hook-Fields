@@ -101,6 +101,9 @@ function buddyforms_list_all_post_fields( $content ) {
                                     case 'image':
                                         $result .= "<img src='" . $attachment_thumbnail_url . "' />";
                                         break;
+									 case 'audio':
+                                        $result .= "<audio width='150' height='150' controls> <source src='" . $attachment_full_url . "' ></audio>";
+                                        break;
 
 									default :
 									case 'application':
@@ -232,6 +235,9 @@ function buddyforms_form_display_element_frontend() {
 
                                 case 'image':
                                     $media_output .= "<img src='" . $attachment_thumbnail_url[0] . "' />";
+                                    break;
+								case 'audio':
+                                    $media_output .= "<audio width=". $media_size_width . " controls> <source src='" . $attachment_full_url . "' ></audio>";
                                     break;
 
 								default :
