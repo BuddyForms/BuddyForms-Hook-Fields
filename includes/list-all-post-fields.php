@@ -237,7 +237,12 @@ function buddyforms_form_display_element_frontend() {
                                     $media_output .= "<img src='" . $attachment_thumbnail_url[0] . "' />";
                                     break;
 								case 'audio':
-                                    $media_output .= "<audio width=". $media_size_width . " controls> <source src='" . $attachment_full_url . "' ></audio>";
+                                    $media_style   = "style='width: ". $media_size_width . "px;'";
+                                    $media_output .= "<span class='image-placeholder' " . $media_style . ">";
+                                    $media_output .= "<audio  controls> <source src='" . $attachment_full_url . "' ></audio>";
+                                    $media_output .= "<p>". basename( get_attached_file( $attachment_item ) ) ."</p>";
+                                    $media_output .= "</span>";
+
                                     break;
 
 								default :
