@@ -239,7 +239,7 @@ function buddyforms_form_display_element_frontend() {
 								case 'audio':
                                     $media_style   = "style='width: ". $media_size_width . "px;'";
                                     $media_output .= "<span class='image-placeholder' " . $media_style . ">";
-                                    $media_output .= "<audio  controls> <source src='" . $attachment_full_url . "' ></audio>";
+                                    $media_output .= "<audio  controls style='width:80%'> <source src='" . $attachment_full_url . "' ></audio>";
                                     $media_output .= "<p>". basename( get_attached_file( $attachment_item ) ) ."</p>";
                                     $media_output .= "</span>";
 
