@@ -2,8 +2,8 @@
 Contributors: svenl77, konradS, themekraft, buddyforms, gfirem, marin250189
 Tags: buddypress, user, members, profiles, custom post types, taxonomy, frontend posting, frontend editing,hook fields, custom fields, post meta
 Requires at least: 3.9
-Tested up to: 5.6.2
-Stable tag: 1.3.3
+Tested up to: 5.7
+Stable tag: 1.3.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,11 @@ You need the BuddyForms plugin installed for the plugin to work.
 
 
 == Changelog ==
+= 1.3.4 - 22 May 2021 =
+* Fixed to do not show default thumbnail if no media was uploaded. 
+* Improved thumbnail/preview support for PDF, Video, Audio (MP3) and Compressed files on the Upload and File fields.
+* Tested up to WordPress 5.7
+
 = 1.3.3 - 8 Mar 2021 =
 * Fixed issue related with hooked fields on the single view list.
 * Added improvements on the integration of Upload and File fields.
