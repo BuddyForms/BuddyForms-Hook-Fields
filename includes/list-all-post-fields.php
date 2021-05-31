@@ -63,7 +63,7 @@ function buddyforms_list_all_post_fields( $content ) {
 
 
 		$striped_c   = 0;
-		$new_content = '<table rules="all" class="hook-field-container" cellpadding="10">';
+		$new_content = '<table rules="all" class="bf-hook-field-container" cellpadding="10">';
 		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
 			foreach ( $buddyforms[ $form_slug ]['form_fields'] as $key => $field ) {
 
