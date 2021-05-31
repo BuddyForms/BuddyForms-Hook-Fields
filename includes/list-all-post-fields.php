@@ -269,10 +269,9 @@ function buddyforms_form_display_element_frontend() {
                                     break;
                             }
 							
-							
+							$media_output .= '</a>';
+							$result[]     = $media_output;
                         }
-						$media_output .= '</a>';
-						$result[]     = $media_output;
                     }
 
                     $meta_tmp = implode( '', $result );
