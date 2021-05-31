@@ -62,7 +62,7 @@ You need the BuddyForms plugin installed for the plugin to work.
 
 == Changelog ==
 = 1.3.5 - 31 May 2021 =
-* Hotfix: Fixed CSS issues for CTP other than posts. Eg: Product (WooCommerce).
+* Hotfix: Fixed CSS issues for CPT other than posts. Eg: Product (WooCommerce).
 * Hotfix: Fixed issue related with duplicate hooked media files on the Post Single View.
 
 = 1.3.4 - 22 May 2021 =
