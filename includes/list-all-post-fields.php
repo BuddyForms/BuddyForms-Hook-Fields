@@ -37,6 +37,13 @@ function buddyforms_list_all_post_fields( $content ) {
 		return $content;
 	}
 
+	if (  isset( $buddyforms[ $form_slug ]['hook_fields_show_edit_link'] ) ) {		
+
+		$edit_link = '<p><a class="post-edit-link" href="'.get_edit_post_link($post->ID).'">'.__('Edit','buddyforms').' <span class="screen-reader-text">prueba nueva</span></a></p>';
+		
+		$content = $edit_link . $content;
+	}
+
 	wp_enqueue_style( 'bf-hook-fields', plugins_url( 'assets/bf-hook-fields.css', __FILE__ ) );
 
 	remove_filter( 'the_content', 'buddyforms_list_all_post_fields', 999 );
