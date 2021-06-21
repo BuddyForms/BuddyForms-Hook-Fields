@@ -52,6 +52,13 @@ function buddyforms_list_all_post_fields_admin_settings_sidebar_metabox_html() {
 	$hide_title   = isset( $buddyform['hook_fields_hide_title'] ) ? $buddyform['hook_fields_hide_title'] : '';
 	$form_setup[] = new Element_Checkbox( '<b>' . __( 'Hide the title ', 'buddyforms' ) . '</b>', "buddyforms_options[hook_fields_hide_title]", array( 'yes' => __( 'Disable the post title', 'buddyforms' ) ), array( 'value' => $hide_title, 'shortDesc' => __( 'Use this option if you override the Title with a template shortcode.', 'buddyforms' ) ) );
 
+
+	//Add Show edit link feature
+	//Add option to hide the title
+	$show_edit_link   = isset( $buddyform['hook_fields_show_edit_link'] ) ? $buddyform['hook_fields_show_edit_link'] : '';
+	$form_setup[] = new Element_Checkbox( '<b>' . __( 'Show Edit Link ', 'buddyforms' ) . '</b>', "buddyforms_options[hook_fields_show_edit_link]", array( 'yes' => __( 'Show Edit Link', 'buddyforms' ) ), array( 'value' => $show_edit_link, 'shortDesc' => __( 'Use this option to show a Edit link on the front end', 'buddyforms' ) ) );
+
+
 	buddyforms_display_field_group_table( $form_setup );
 }
 
