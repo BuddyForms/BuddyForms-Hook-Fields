@@ -1,9 +1,5 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
-
 /**
  * Define who the form data will be show in a single post view.
  *
@@ -372,4 +368,34 @@ function buddyforms_form_display_element_frontend() {
 }
 
 add_action( 'the_post', 'buddyforms_form_display_element_frontend' );
+
+add_shortcode( 'bfsinglefield', 'bf_hooks_single_field' );
+function bf_hooks_single_field( $atts ){
+	global $buddyforms, $post;
+	if( ! isset( $atts['form-slug']) || ! isset( $atts['field-slug'] ) ){
+		return;
+	}
+
+	$form_slug = $atts['form-slug'];
+	$form = $buddyforms[$form_slug];
+	if( empty( $form ) ){
+		return;
+	}
+	if ( ! isset( $form['form_fields'] ) ) {
+		return;
+	}
+	$selected_field = '';
+	foreach( $form['form_fields'] as $field){
+		if( $field['slug'] == $atts['field-slug']){
+			$selected_field = $field['slug'];
+			break;
+		}
+	}
+	$field_data = buddyforms_get_field_with_meta( $form_slug, $post->ID, $selected_field, $full_string = false, $html = true );
+	if( ! isset( $field_data['value'] ) ){
+		return '<b>Sorry, this field was not found in the selected form.</b>';
+	}
+	$field_value = $field_data['value'];
+	return $field_value;
+}
 
