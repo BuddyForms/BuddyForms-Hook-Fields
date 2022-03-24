@@ -2,8 +2,8 @@
 Contributors: svenl77, konradS, themekraft, buddyforms, gfirem, marin250189
 Tags: buddypress, user, members, profiles, custom post types, taxonomy, frontend posting, frontend editing,hook fields, custom fields, post meta
 Requires at least: 3.9
-Tested up to: 5.7
-Stable tag: 1.3.5
+Tested up to: 5.9
+Stable tag: 1.3.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,11 @@ You need the BuddyForms plugin installed for the plugin to work.
 
 
 == Changelog ==
+= 1.3.6 - 23 Mar 2022 =
+* Added new option to show Edit link in frontend.
+* Added new shortcode to display single field in frontend.
+* Tested up to WordPress 5.9
+
 = 1.3.5 - 31 May 2021 =
 * Hotfix: Fixed CSS issues for CPT other than posts. Eg: Product (WooCommerce).
 * Hotfix: Fixed issue related with duplicate hooked media files on the Post Single View.
