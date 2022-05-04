@@ -375,13 +375,16 @@ function bf_hooks_single_field( $atts ){
 	if( ! isset( $atts['form-slug']) || ! isset( $atts['field-slug'] ) ){
 		return;
 	}
-
+	$form_to_check = get_post_meta( $post->ID, '_bf_form_slug', true );
 	$form_slug = $atts['form-slug'];
 	$form = $buddyforms[$form_slug];
 	if( empty( $form ) ){
 		return;
 	}
 	if ( ! isset( $form['form_fields'] ) ) {
+		return;
+	}
+	if( ( $atts['form-slug'] != $form_to_check ) && isset( $post ) ){
 		return;
 	}
 	$selected_field = '';
@@ -391,11 +394,16 @@ function bf_hooks_single_field( $atts ){
 			break;
 		}
 	}
+
+	$current_post_type =  get_post_type();
+	if( empty( $current_post_type ) ){
+		return '<p>Field <b>"' . $atts['field-slug'] . '"</b> value.</p>';
+	}
 	$field_data = buddyforms_get_field_with_meta( $form_slug, $post->ID, $selected_field, $full_string = false, $html = true );
 	if( ! isset( $field_data['value'] ) ){
 		return '<b>Sorry, this field was not found in the selected form.</b>';
 	}
-	$field_value = $field_data['value'];
+	$field_value = '<span>' . $field_data['value'] . '</span>';
 	return $field_value;
 }
 
