@@ -10,24 +10,27 @@ function buddyforms_hooks_fields_template_post_type() {
 		'singular_name' => __( 'Templates', 'buddyforms' ),
 	);
 
-	register_post_type( 'bf_template', array(
-		'labels'              => $labels,
-		'public'              => true,
-		'show_ui'             => true,
-		'capability_type'     => 'post',
-		'hierarchical'        => false,
-		'show_in_rest'        => false,
-//		'rewrite'             => true,
-		'supports'            => array(
-			'title',
-			'editor',
-			'elementor'
-		),
-		'show_in_menu'        => 'edit.php?post_type=buddyforms',
-		'exclude_from_search' => true,
-		'publicly_queryable'  => true,
-		'menu_icon'           => 'dashicons-buddyforms',
-	) );
+	register_post_type(
+		'bf_template',
+		array(
+			'labels'                       => $labels,
+			'public'                       => true,
+			'show_ui'                      => true,
+			'capability_type'              => 'post',
+			'hierarchical'                 => false,
+			'show_in_rest'                 => false,
+			// 'rewrite'             => true,
+								'supports' => array(
+									'title',
+									'editor',
+									'elementor',
+								),
+			'show_in_menu'                 => 'edit.php?post_type=buddyforms',
+			'exclude_from_search'          => true,
+			'publicly_queryable'           => true,
+			'menu_icon'                    => 'dashicons-buddyforms',
+		)
+	);
 }
 
 add_action( 'init', 'buddyforms_hooks_fields_template_post_type' );
@@ -91,7 +94,7 @@ add_filter( 'wp_insert_post_data', 'buddyforms_hooks_fields_private_template' );
 
 /**
  * @param $post_states
- * @param WP_Post $post
+ * @param WP_Post     $post
  *
  * @return mixed
  */
@@ -100,7 +103,6 @@ function buddyforms_hooks_fields_remove_private_flag( $post_states, $post ) {
 		if ( ! empty( $post->post_type ) && $post->post_type === 'bf_template' && isset( $post_states['private'] ) ) {
 			unset( $post_states['private'] );
 		}
-
 	}
 
 	return $post_states;
