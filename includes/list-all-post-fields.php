@@ -250,7 +250,7 @@ function buddyforms_form_display_element_frontend() {
 				$post_meta_tmp = '<div class="post_meta bf-hook-field ' . $customfield['slug'] . '">';
 
 				if ( isset( $customfield['display_name'] ) ) {
-					$post_meta_tmp .= '<label>' . $customfield['name'] . '</label>';
+					$post_meta_tmp .= '<p style="width:100%;">' . $customfield['name'] . ':</p>';
 				}
 
 				if ( $field['type'] === 'upload' || $field['type'] === 'file' ) {
@@ -338,7 +338,7 @@ function buddyforms_form_display_element_frontend() {
 				$post_meta_tmp .= '</div>';
 
 				$post_meta_tmp = apply_filters( 'buddyforms_form_element_display_frontend_before_hook', $post_meta_tmp );
-				$sgfdhgf       = addcslashes( $post_meta_tmp, '"' );
+
 				if ( isset( $customfield['hook'] ) && ! empty( $customfield['hook'] ) ) {
 					add_action(
 						$customfield['hook'],
@@ -461,7 +461,7 @@ function bf_hooks_single_field( $atts ) {
 	if ( ! isset( $field_data['value'] ) ) {
 		return '<b>Sorry, this field was not found in the selected form.</b>';
 	}
-	$field_value = '<span>' . $field_data['value'] . '</span>';
+	$field_value = '<p>' . $field_data['value'] . '</p>';
 	return $field_value;
 }
 
