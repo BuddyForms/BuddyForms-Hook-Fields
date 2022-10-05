@@ -3,7 +3,7 @@
  * Plugin Name: BuddyForms Hook Fields
  * Plugin URI: https://themekraft.com/products/buddyforms-hook-fields/
  * Description: BuddyForms Hook Fields
- * Version: 1.3.10
+ * Version: 1.3.11
  * Author: ThemeKraft
  * Author URI: https://themekraft.com/buddyforms/
  * Licence: GPLv3
@@ -117,6 +117,7 @@ function bhf_fs() {
 						'first-path' => 'plugins.php',
 						'support'    => false,
 					),
+					'bundle_license_auto_activation' => true,
 				)
 			);
 		} catch ( Freemius_Exception $e ) {

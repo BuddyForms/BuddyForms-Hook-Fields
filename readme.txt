@@ -2,8 +2,8 @@
 Contributors: svenl77, konradS, themekraft, buddyforms, gfirem, marin250189
 Tags: buddypress, user, members, profiles, custom post types, taxonomy, frontend posting, frontend editing,hook fields, custom fields, post meta
 Requires at least: 3.9
-Tested up to: 6.0.1
-Stable tag: 1.3.10
+Tested up to: 6.0.2
+Stable tag: 1.3.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,10 @@ You need the BuddyForms plugin installed for the plugin to work.
 
 
 == Changelog ==
+= 1.3.11 - 04 Oct 2022 =
+* Added auto activation when using bundle license.
+* Tested up to WordPress 6.0.2
+
 = 1.3.10 - 29 Aug 2022 =
 * Fixed issue with field values output.
 * Tested up to WordPress 6.0.1
