@@ -1,36 +1,39 @@
-=== BuddyForms Hook Fields ===
+=== Display Data on your site, Create Dynamic Content Templates from any form data. Works with ACF, Pods, BuddyPress/ BuddyBoss===
 Contributors: svenl77, konradS, themekraft, buddyforms, gfirem, marin250189
-Tags: buddypress, user, members, profiles, custom post types, taxonomy, frontend posting, frontend editing,hook fields, custom fields, post meta
+Tags: form submission data, display form data, dynamic templates, content templates, form content templates
 Requires at least: 3.9
 Tested up to: 6.1
 Stable tag: 1.3.12
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Have full control of your fields output. Hook your BuddyForms Form Fields via options and display them everywhere on your site.
+Get Full Control of your WordPress Post Content Layout. Display any kind of form-submitted data in the front end by using hooks or create dynamic content templates that you can use in your single view and standardize how a form submission will look in the front.
 
 == Description ==
 
-This is the BuddyForms Hook Fields Extension. You need the BuddyForms plugin installed for the plugin to work. <a href="http://buddyforms.com" target="_blank">Get BuddyForms now!</a>
-
-With this plugin you will get new options added to your Form Builder "Fields" to select where you want to display the field. This makes it very easy to manage the output and can save you a lot of time modifying your templates, by just adding a hook.
-
-<h4>Display different Field Types</h4>
+### Display any field type
 The plugin will keep care about the different Field Types like ( Links, Categories, text fields etc. ) and display them exactly as they should. You can decide if you only want the value get displayed or with the field name.
 
-<h4>Create a list - Reorder Items via Drag and Drop</h4>
+###HTML Formated or Clean?
+###Create Dynamic Templates
+###Use with any Pagebuilder like Elementor or DIVI
+###Create Dynamic Content Templates with Gutenberg 
+
+
+###Create a list - Reorder Items via Drag and Drop
 If you want to display multiple fields as list in one place, You can reorder the list easily via drag and drop in the FormBuilder. Just move the field to the correct position in the form builder and they will get displayed exact in this order.
 
-<h4>For the single view you have 4 default options.</h4>
+### Create a Table from form data 
 
+### Hoook Into the Content
+For the single view you have 4 default options.
 1. before the title
 2. after the title
 3. before the content
 4. after the content.
 
-<h4>Side wide, you can hook everywhere</h4>
-
-Just enter the Hook name in the text fields.
+### Global Hooks
+Side wide, you can hook everywhere. Just enter the Hook name in the text fields.
 
 == Documentation & Support ==
 
