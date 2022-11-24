@@ -15,10 +15,21 @@ Get Full Control of your WordPress Post Content Layout. Display any kind of form
 The plugin will keep care of the different Field Types like ( Links, Categories, text fields, etc. ) and display them exactly as they should. You can decide if you only want the value gets displayed or with the field name.
 
 ###HTML Formated or Clean?
-###Create Dynamic Templates
-###Use with any Pagebuilder like Elementor or DIVI
-###Create Dynamic Content Templates with Gutenberg 
 
+###Create Dynamic Templates
+Create Dynamic Templates to display values dynamically. These templates can be used in the Form Builder to overwrite the single view of posts, pages, or any other post type. 
+ 
+ [youtube https://youtu.be/sCGIIfmF9hY]
+ 
+###In Gutenberg FSE, Block Editor
+Display any form value in the Gutenberg Block Editor, or in FSE Themes. 
+
+###Create Dynamic Content Templates with Gutenberg 
+Conveniently use form fields data as dynamic data in your Gutenberg templates.
+[youtube https://youtu.be/swDcSpn-psg]
+
+### Use with any Pagebuilder like Elementor or DIVI
+Use any template or field data in your prefeerd Page Builder to create dynamic single pages or a complete dynamic laqyout
 
 ###Create a list - Reorder Items via Drag and Drop
 If you want to display multiple fields as a list in one place, You can reorder the list easily via drag and drop in the FormBuilder. Just move the field to the correct position in the form builder and they will get displayed exactly in this order.
@@ -41,8 +52,7 @@ https://themekraft.com/wordpress-solutions/display-form-data/
 
 == Documentation & Support ==
 
-<h4>Extensive Documentation and Support</h4>
-
+###Extensive Documentation and Support
 All code is neat, clean, and well-documented (inline as well as in the documentation). The BuddyForms Documentation with many how-to’s is following now!
 
 If you still get stuck somewhere, our support gets you back on the right track. You can find all help buttons in your BuddyForms Settings Panel in your WP Dashboard!
@@ -56,8 +66,20 @@ Activate BuddyForms Hook Fields in the "Plugins" admin panel using the "Activate
 
 == Frequently Asked Questions ==
 
-You need the BuddyForms plugin installed for the plugin to work.
-<a href="http://buddyforms.com" target="_blank">Get BuddyForms now!</a>
+= Can I display Post Meta fields =
+Yes, you can display any post meta that is controled by a BuddyForms Post Form. This also works for existing post meta.You only need to create the form elemet and assign it to the meta so that the plugin iknow what type of data it need to create the output html for.
+
+= Can I display User Meta fields =
+= Can I display ACF Advanced Custom Fields=
+= Can I display PODS fields =
+= Can I display Custom Fields =
+= Can I display Submitted Form Data=
+= Can I display Form Fields =
+= Can I display Form Data =
+= Can I display use Hooks =
+= Can I display it in php =
+= Are there any restrictsions =
+
 
 == Screenshots ==
 
