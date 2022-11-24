@@ -1,4 +1,4 @@
-=== Display Data on your site, Create Dynamic Content Templates from any form data. Works with ACF, Pods, BuddyPress/ BuddyBoss===
+=== Display Data on your site! Create Dynamic Content Templates from any form of data. Works with ACF, Pods, BuddyPress/ BuddyBoss===
 Contributors: svenl77, konradS, themekraft, buddyforms, gfirem, marin250189
 Tags: form submission data, display form data, dynamic templates, content templates, form content templates
 Requires at least: 3.9
@@ -12,7 +12,7 @@ Get Full Control of your WordPress Post Content Layout. Display any kind of form
 == Description ==
 
 ### Display any field type
-The plugin will keep care about the different Field Types like ( Links, Categories, text fields etc. ) and display them exactly as they should. You can decide if you only want the value get displayed or with the field name.
+The plugin will keep care of the different Field Types like ( Links, Categories, text fields, etc. ) and display them exactly as they should. You can decide if you only want the value gets displayed or with the field name.
 
 ###HTML Formated or Clean?
 ###Create Dynamic Templates
@@ -21,12 +21,12 @@ The plugin will keep care about the different Field Types like ( Links, Categori
 
 
 ###Create a list - Reorder Items via Drag and Drop
-If you want to display multiple fields as list in one place, You can reorder the list easily via drag and drop in the FormBuilder. Just move the field to the correct position in the form builder and they will get displayed exact in this order.
+If you want to display multiple fields as a list in one place, You can reorder the list easily via drag and drop in the FormBuilder. Just move the field to the correct position in the form builder and they will get displayed exactly in this order.
 
 ### Create a Table from form data 
 
 ### Hoook Into the Content
-For the single view you have 4 default options.
+For the single view, you have 4 default options.
 1. before the title
 2. after the title
 3. before the content
@@ -35,20 +35,21 @@ For the single view you have 4 default options.
 ### Global Hooks
 Side wide, you can hook everywhere. Just enter the Hook name in the text fields.
 
+### How to Display Form Data on the Front End in WordPress
+Display Your Website Data Anywhere You Choose! 
+https://themekraft.com/wordpress-solutions/display-form-data/
+
 == Documentation & Support ==
 
 <h4>Extensive Documentation and Support</h4>
 
-All code is neat, clean and well documented (inline as well as in the documentation).
+All code is neat, clean, and well-documented (inline as well as in the documentation). The BuddyForms Documentation with many how-to’s is following now!
 
-The BuddyForms Documentation with many how-to’s is following now!
-
-If you still get stuck somewhere, our support gets you back on the right track.
-You can find all help buttons in your BuddyForms Settings Panel in your WP Dashboard!
+If you still get stuck somewhere, our support gets you back on the right track. You can find all help buttons in your BuddyForms Settings Panel in your WP Dashboard!
 
 == Installation ==
 
-You can download and install BuddyForms Hook Fields using the built in WordPress plugin installer. If you download BuddyForms manually,
+You can download and install BuddyForms Hook Fields using the built-in WordPress plugin installer. If you download BuddyForms manually,
 make sure it is uploaded to "/wp-content/plugins/".
 
 Activate BuddyForms Hook Fields in the "Plugins" admin panel using the "Activate" link. If you're using WordPress Multisite, you can optionally activate BuddyForms Hook Fields Network Wide.
