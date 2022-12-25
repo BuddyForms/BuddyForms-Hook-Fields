@@ -2,8 +2,8 @@
 Contributors: svenl77, konradS, themekraft, buddyforms, gfirem, marin250189
 Tags: form submission data, display form data, dynamic templates, content templates, form content templates
 Requires at least: 3.9
-Tested up to: 6.1
-Stable tag: 1.3.12
+Tested up to: 6.1.1
+Stable tag: 1.3.13
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -87,6 +87,10 @@ Yes, you can display any post meta that is controled by a BuddyForms Post Form. 
 
 
 == Changelog ==
+= 1.3.13 - 25 Dec 2022 =
+* Fixed issue with shortcode loop.
+* Tested up to WordPress 6.1.1
+
 = 1.3.12 - 06 Nov 2022 =
 * Updated download link in TGM class.
 * Tested up to WordPress 6.1
