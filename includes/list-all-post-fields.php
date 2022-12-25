@@ -433,6 +433,9 @@ function bf_hooks_single_field( $atts ) {
 	if ( ! isset( $atts['form-slug'] ) || ! isset( $atts['field-slug'] ) ) {
 		return;
 	}
+	if( ! is_object( $post ) ){
+		return;
+	}
 	$form_to_check = get_post_meta( $post->ID, '_bf_form_slug', true );
 	$form_slug     = $atts['form-slug'];
 	$form          = $buddyforms[ $form_slug ];

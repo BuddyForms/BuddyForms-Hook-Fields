@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function buddyforms_hook_fields_shortcodes_to_block_init() {
 	global $buddyforms, $pagenow;
 
-	if ( empty( $buddyforms ) ) {
+	if ( empty( $buddyforms ) || ! is_array( $buddyforms ) ) {
 		return;
 	}
 
