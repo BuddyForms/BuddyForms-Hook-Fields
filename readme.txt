@@ -3,7 +3,7 @@ Contributors: svenl77, konradS, themekraft, buddyforms, gfirem, marin250189
 Tags: form submission data, display form data, dynamic templates, content templates, form content templates
 Requires at least: 3.9
 Tested up to: 6.1.1
-Stable tag: 1.3.13
+Stable tag: 1.3.14
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,27 +14,24 @@ Get Full Control of your WordPress Post Content Layout. Display any kind of form
 ### Display any field type
 The plugin will keep care of the different Field Types like ( Links, Categories, text fields, etc. ) and display them exactly as they should. You can decide if you only want the value gets displayed or with the field name.
 
-###HTML Formated or Clean?
-
-###Create Dynamic Templates
+### Create Dynamic Templates
 Create Dynamic Templates to display values dynamically. These templates can be used in the Form Builder to overwrite the single view of posts, pages, or any other post type. 
  
- [youtube https://youtu.be/sCGIIfmF9hY]
+[youtube https://youtu.be/sCGIIfmF9hY]
  
-###In Gutenberg FSE, Block Editor
+### In Gutenberg FSE, Block Editor
 Display any form value in the Gutenberg Block Editor, or in FSE Themes. 
 
-###Create Dynamic Content Templates with Gutenberg 
+### Create Dynamic Content Templates with Gutenberg 
 Conveniently use form fields data as dynamic data in your Gutenberg templates.
+
 [youtube https://youtu.be/swDcSpn-psg]
 
 ### Use with any Pagebuilder like Elementor or DIVI
 Use any template or field data in your prefeerd Page Builder to create dynamic single pages or a complete dynamic laqyout
 
-###Create a list - Reorder Items via Drag and Drop
+### Create a list - Reorder Items via Drag and Drop
 If you want to display multiple fields as a list in one place, You can reorder the list easily via drag and drop in the FormBuilder. Just move the field to the correct position in the form builder and they will get displayed exactly in this order.
-
-### Create a Table from form data 
 
 ### Hoook Into the Content
 For the single view, you have 4 default options.
@@ -47,10 +44,7 @@ For the single view, you have 4 default options.
 Side wide, you can hook everywhere. Just enter the Hook name in the text fields.
 
 ### How to Display Form Data on the Front End in WordPress
-Display Your Website Data Anywhere You Choose! 
-https://themekraft.com/wordpress-solutions/display-form-data/
-
-== Documentation & Support ==
+[Display Your Website Data Anywhere You Choose!](https://themekraft.com/wordpress-solutions/display-form-data/)
 
 ###Extensive Documentation and Support
 All code is neat, clean, and well-documented (inline as well as in the documentation). The BuddyForms Documentation with many how-to’s is following now!
@@ -87,6 +81,9 @@ Yes, you can display any post meta that is controled by a BuddyForms Post Form. 
 
 
 == Changelog ==
+= 1.3.14 - 30 Dec 2022 =
+* Improved readme file description.
+
 = 1.3.13 - 25 Dec 2022 =
 * Fixed issue with shortcode loop.
 * Tested up to WordPress 6.1.1
