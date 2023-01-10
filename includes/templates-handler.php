@@ -18,13 +18,13 @@ function buddyforms_hooks_fields_template_post_type() {
 			'show_ui'                      => true,
 			'capability_type'              => 'post',
 			'hierarchical'                 => false,
-			'show_in_rest'                 => false,
+			'show_in_rest'                 => true,
 			// 'rewrite'             => true,
-								'supports' => array(
-									'title',
-									'editor',
-									'elementor',
-								),
+			'supports' => array(
+				'title',
+				'editor',
+				'elementor',
+			),
 			'show_in_menu'                 => 'edit.php?post_type=buddyforms',
 			'exclude_from_search'          => true,
 			'publicly_queryable'           => true,
@@ -32,8 +32,44 @@ function buddyforms_hooks_fields_template_post_type() {
 		)
 	);
 }
-
 add_action( 'init', 'buddyforms_hooks_fields_template_post_type' );
+
+function buddyforms_hooks_fields_add_meta() {
+	$screens = [ 'bf_template' ];
+	foreach ( $screens as $screen ) {
+		add_meta_box(
+			'bf_template_meta_id',
+			'Template Options',
+			'bf_template_meta_html',
+			$screen
+		);
+	}
+}
+add_action( 'add_meta_boxes', 'buddyforms_hooks_fields_add_meta' );
+
+function bf_template_meta_html( $post ) {
+	$value = get_post_meta( $post->ID, 'bf_template_type', true );
+	?>
+	<label for="bf_template_type">Template Type</label>
+	<p>
+	<select name="bf_template_type" id="bf_template_type" class="postbox">
+		<option value="single" <?php selected( $value, 'single' ); ?>>Single Template</option>
+		<option value="loop" <?php selected( $value, 'loop' ); ?>>Loop Template</option>
+	</select>
+</p>
+	<?php
+}
+
+function bf_template_save_postdata( $post_id ) {
+	if ( array_key_exists( 'bf_template_type', $_POST ) ) {
+		update_post_meta(
+			$post_id,
+			'bf_template_type',
+			$_POST['bf_template_type']
+		);
+	}
+}
+add_action( 'save_post', 'bf_template_save_postdata' );
 
 /**
  * Get all template pages

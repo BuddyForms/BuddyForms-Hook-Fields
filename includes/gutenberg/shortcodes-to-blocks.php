@@ -75,6 +75,16 @@ function buddyforms_hook_fields_block_render_form( $attributes ) {
 		$tmp = '<p>' . __( 'Please select a form element in the block settings sidebar!', 'buddyforms' ) . '</p>';
 		if ( isset( $attributes['bf_form_field'] ) ) {
 				$tmp = do_shortcode( '[bfsinglefield form-slug="' . $attributes['bf_form_slug'] . '" field-slug="' . $attributes['bf_form_field'] . '"]' );
+
+
+				$is_gb_editor = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST['context'] ) && 'edit' === $_REQUEST['context'];
+
+				if ( $is_gb_editor ){
+					if ( empty($tmp) ){
+						$tmp = 'Dynamic Content: '. $attributes['bf_form_field'];
+					}
+				}
+
 		}
 		return $tmp;
 	} else {
