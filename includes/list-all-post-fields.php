@@ -241,131 +241,135 @@ function buddyforms_form_display_element_frontend() {
 	);
 	foreach ( $buddyforms[ $form_slug ]['form_fields'] as $field_id => $customfield ) {
 
-		if ( ! empty( $customfield['slug'] ) && ( ! empty( $customfield['hook'] ) || is_single() ) ) {
+		if( isset( $customfield['slug'] ) ) {
 
-			$field             = buddyforms_get_field_with_meta( $form_slug, $post->ID, $customfield['slug'] );
-			$customfield_value = ! empty( $field['value'] ) ? $field['value'] : apply_filters( 'buddyforms_field_shortcode_empty_value', '', $field, $form_slug, $post->ID, $field['slug'] );
+			if ( ! empty( $customfield['slug'] ) && ( ( isset( $customfield['hook'] ) && ! empty( $customfield['hook'] ) ) || is_single() ) ) {
 
-			if ( ! empty( $customfield_value ) ) {
-				$post_meta_tmp = '<div class="post_meta bf-hook-field ' . $customfield['slug'] . '">';
-
-				if ( isset( $customfield['display_name'] ) ) {
-					$post_meta_tmp .= '<p style="width:100%;">' . $customfield['name'] . ':</p>';
-				}
-
-				if ( $field['type'] === 'upload' || $field['type'] === 'file' ) {
-					$upload_field_val = get_post_meta( $post->ID, $field['slug'], true );
-					$media_items      = explode( ',', $upload_field_val );
-					$result           = array();
-					$thumbnail_size   = 'thumbnail';
-
-					if ( isset( $buddyforms[ $form_slug ]['form_fields'][ $field_id ]['thumbnail_size'] ) ) {
-						$thumbnail_size = $buddyforms[ $form_slug ]['form_fields'][ $field_id ]['thumbnail_size'];
+				$field             = buddyforms_get_field_with_meta( $form_slug, $post->ID, $customfield['slug'] );
+				$customfield_value = ! empty( $field['value'] ) ? $field['value'] : apply_filters( 'buddyforms_field_shortcode_empty_value', '', $field, $form_slug, $post->ID, $field['slug'] );
+	
+				if ( ! empty( $customfield_value ) ) {
+					$post_meta_tmp = '<div class="post_meta bf-hook-field ' . $customfield['slug'] . '">';
+	
+					if ( isset( $customfield['display_name'] ) ) {
+						$post_meta_tmp .= '<p style="width:100%;">' . $customfield['name'] . ':</p>';
 					}
-
-					foreach ( $media_items as $attachment_item ) {
-						if ( ! empty( $attachment_item ) ) {
-							$attachment_full_url      = wp_get_attachment_url( $attachment_item );
-							$attachment_thumbnail_url = wp_get_attachment_image_src( $attachment_item, $thumbnail_size );
-							$file_mime_type           = get_post_mime_type( $attachment_item );
-							$file_type                = explode( '/', $file_mime_type )[0];
-							$file_type_extension      = explode( '/', $file_mime_type )[1];
-
-							$registered_sizes = wp_get_registered_image_subsizes();
-							$media_size_width = isset( $registered_sizes[ $thumbnail_size ]['width'] ) ? $registered_sizes[ $thumbnail_size ]['width'] : 150;
-
-							$default_img  = plugin_dir_url( __FILE__ ) . '/assets/images/multimedia.png';
-							$media_output = "<a href='" . $attachment_full_url . "' target='_blank'>";
-
-							switch ( $file_type ) {
-
-								case 'video':
-									$media_output .= '<video width=' . $media_size_width . " controls> <source src='" . $attachment_full_url . "' ></video>";
-									break;
-
-								case 'image':
-									$media_output .= "<img src='" . $attachment_thumbnail_url[0] . "' />";
-									break;
-								case 'audio':
-									$media_style   = "style='width: " . $media_size_width . "px;'";
-									$media_output .= "<span class='image-placeholder' " . $media_style . '>';
-									$media_output .= "<audio  controls style='width:80%'> <source src='" . $attachment_full_url . "' ></audio>";
-									$media_output .= '<p>' . basename( get_attached_file( $attachment_item ) ) . '</p>';
-									$media_output .= '</span>';
-
-									break;
-
-								default:
-								case 'application':
-									$media_style   = "style='width: " . $media_size_width . "px;'";
-									$media_output .= "<span class='image-placeholder' " . $media_style . '>';
-
-									if ( $file_type_extension === 'pdf' ) {
-										$pdf_thumbnail = plugin_dir_url( __FILE__ ) . '/assets/images/pdf.png';
-										$media_output .= "<img src='" . $pdf_thumbnail . "' />";
-									} elseif ( $file_type_extension === 'zip' || $file_type_extension == 'x-gzip' || $file_type_extension == 'rar' || $file_type_extension == 'x-7z-compressed' ) {
-										$compressed_thumbnail = plugin_dir_url( __FILE__ ) . '/assets/images/compressed.png';
-										$media_output        .= "<img src='" . $compressed_thumbnail . "' />";
-									} else {
-										$media_output .= "<img src='" . $default_img . "' />";
-									}
-
-									$media_output .= '<p>' . basename( get_attached_file( $attachment_item ) ) . '</p>';
-									$media_output .= '</span>';
-
-									break;
+	
+					if ( $field['type'] === 'upload' || $field['type'] === 'file' ) {
+						$upload_field_val = get_post_meta( $post->ID, $field['slug'], true );
+						$media_items      = explode( ',', $upload_field_val );
+						$result           = array();
+						$thumbnail_size   = 'thumbnail';
+	
+						if ( isset( $buddyforms[ $form_slug ]['form_fields'][ $field_id ]['thumbnail_size'] ) ) {
+							$thumbnail_size = $buddyforms[ $form_slug ]['form_fields'][ $field_id ]['thumbnail_size'];
+						}
+	
+						foreach ( $media_items as $attachment_item ) {
+							if ( ! empty( $attachment_item ) ) {
+								$attachment_full_url      = wp_get_attachment_url( $attachment_item );
+								$attachment_thumbnail_url = wp_get_attachment_image_src( $attachment_item, $thumbnail_size );
+								$file_mime_type           = get_post_mime_type( $attachment_item );
+								$file_type                = explode( '/', $file_mime_type )[0];
+								$file_type_extension      = explode( '/', $file_mime_type )[1];
+	
+								$registered_sizes = wp_get_registered_image_subsizes();
+								$media_size_width = isset( $registered_sizes[ $thumbnail_size ]['width'] ) ? $registered_sizes[ $thumbnail_size ]['width'] : 150;
+	
+								$default_img  = plugin_dir_url( __FILE__ ) . '/assets/images/multimedia.png';
+								$media_output = "<a href='" . $attachment_full_url . "' target='_blank'>";
+	
+								switch ( $file_type ) {
+	
+									case 'video':
+										$media_output .= '<video width=' . $media_size_width . " controls> <source src='" . $attachment_full_url . "' ></video>";
+										break;
+	
+									case 'image':
+										$media_output .= "<img src='" . $attachment_thumbnail_url[0] . "' />";
+										break;
+									case 'audio':
+										$media_style   = "style='width: " . $media_size_width . "px;'";
+										$media_output .= "<span class='image-placeholder' " . $media_style . '>';
+										$media_output .= "<audio  controls style='width:80%'> <source src='" . $attachment_full_url . "' ></audio>";
+										$media_output .= '<p>' . basename( get_attached_file( $attachment_item ) ) . '</p>';
+										$media_output .= '</span>';
+	
+										break;
+	
+									default:
+									case 'application':
+										$media_style   = "style='width: " . $media_size_width . "px;'";
+										$media_output .= "<span class='image-placeholder' " . $media_style . '>';
+	
+										if ( $file_type_extension === 'pdf' ) {
+											$pdf_thumbnail = plugin_dir_url( __FILE__ ) . '/assets/images/pdf.png';
+											$media_output .= "<img src='" . $pdf_thumbnail . "' />";
+										} elseif ( $file_type_extension === 'zip' || $file_type_extension == 'x-gzip' || $file_type_extension == 'rar' || $file_type_extension == 'x-7z-compressed' ) {
+											$compressed_thumbnail = plugin_dir_url( __FILE__ ) . '/assets/images/compressed.png';
+											$media_output        .= "<img src='" . $compressed_thumbnail . "' />";
+										} else {
+											$media_output .= "<img src='" . $default_img . "' />";
+										}
+	
+										$media_output .= '<p>' . basename( get_attached_file( $attachment_item ) ) . '</p>';
+										$media_output .= '</span>';
+	
+										break;
+								}
+	
+								$media_output .= '</a>';
+								$result[]      = $media_output;
 							}
-
-							$media_output .= '</a>';
-							$result[]      = $media_output;
 						}
-					}
-
-					$meta_tmp = implode( '', $result );
-
-				} else {
-					if ( is_array( $customfield_value ) ) {
-						$meta_tmp = '<p>' . implode( ',', $customfield_value ) . '</p>';
+	
+						$meta_tmp = implode( '', $result );
+	
 					} else {
-						$meta_tmp = '<p>' . $customfield_value . '</p>';
-					}
-				}
-
-				if ( $meta_tmp ) {
-					$post_meta_tmp .= apply_filters( 'buddyforms_form_element_display_frontend', $meta_tmp, $customfield );
-				}
-
-				$post_meta_tmp .= '</div>';
-
-				$post_meta_tmp = apply_filters( 'buddyforms_form_element_display_frontend_before_hook', $post_meta_tmp );
-
-				if ( isset( $customfield['hook'] ) && ! empty( $customfield['hook'] ) ) {
-					add_action(
-						$customfield['hook'],
-						function () use ( $post_meta_tmp ) {
-							echo wp_kses( addcslashes( $post_meta_tmp, '"' ), $allowed );
+						if ( is_array( $customfield_value ) ) {
+							$meta_tmp = '<p>' . implode( ',', $customfield_value ) . '</p>';
+						} else {
+							$meta_tmp = '<p>' . $customfield_value . '</p>';
 						}
-					);
-				}
-
-				if ( is_single() && isset( $customfield['display'] ) ) {
-					switch ( $customfield['display'] ) {
-						case 'before_the_title':
-							$before_the_title .= $post_meta_tmp;
-							break;
-						case 'after_the_title':
-							$after_the_title .= $post_meta_tmp;
-							break;
-						case 'before_the_content':
-							$before_the_content .= $post_meta_tmp;
-							break;
-						case 'after_the_content':
-							$after_the_content .= $post_meta_tmp;
-							break;
+					}
+	
+					if ( $meta_tmp ) {
+						$post_meta_tmp .= apply_filters( 'buddyforms_form_element_display_frontend', $meta_tmp, $customfield );
+					}
+	
+					$post_meta_tmp .= '</div>';
+	
+					$post_meta_tmp = apply_filters( 'buddyforms_form_element_display_frontend_before_hook', $post_meta_tmp );
+	
+					if ( isset( $customfield['hook'] ) && ! empty( $customfield['hook'] ) ) {
+						add_action(
+							$customfield['hook'],
+							function () use ( $post_meta_tmp ) {
+								echo wp_kses( addcslashes( $post_meta_tmp, '"' ), $allowed );
+							}
+						);
+					}
+	
+					if ( is_single() && isset( $customfield['display'] ) ) {
+						switch ( $customfield['display'] ) {
+							case 'before_the_title':
+								$before_the_title .= $post_meta_tmp;
+								break;
+							case 'after_the_title':
+								$after_the_title .= $post_meta_tmp;
+								break;
+							case 'before_the_content':
+								$before_the_content .= $post_meta_tmp;
+								break;
+							case 'after_the_content':
+								$after_the_content .= $post_meta_tmp;
+								break;
+						}
 					}
 				}
 			}
 		}
+
 	}
 
 	if ( is_single() ) {
