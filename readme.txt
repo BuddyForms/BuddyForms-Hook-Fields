@@ -3,7 +3,7 @@ Contributors: svenl77, konradS, themekraft, buddyforms, gfirem, marin250189
 Tags: form submission data, display form data, dynamic templates, content templates, form content templates
 Requires at least: 3.9
 Tested up to: 6.1.1
-Stable tag: 1.3.14
+Stable tag: 1.3.15
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +81,9 @@ Yes, you can display any post meta that is controled by a BuddyForms Post Form. 
 
 
 == Changelog ==
+= 1.3.15 - 21 Mar 2023 =
+* Fixed issue with undefined variable.
+
 = 1.3.14 - 30 Dec 2022 =
 * Improved readme file description.
 
